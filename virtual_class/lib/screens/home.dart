@@ -1,11 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/models/drawer_pages.dart';
-import 'package:virtual_class/models/settings.dart';
-import 'package:virtual_class/models/test_model.dart';
-import 'package:virtual_class/widgets/mydrawer.dart';
-import 'package:virtual_class/widgets/mysliverappbar.dart';
+import '../models/settings.dart';
+import '../models/test_model.dart';
+import '../widgets/mydrawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,6 +23,21 @@ class HomeState extends State<Home> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
+        actions: <Widget>[
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  //color: Colors.red,
+                  image: DecorationImage(image: Image.asset("assets/xkml4m51.png").image,fit: BoxFit.contain),
+                shape: BoxShape.circle),
+              ),
+            ),
+          )
+        ],
         // title: 'Text(Provider.of<Test>(context).text?? 'AAAAA')',
         title: Text('Class'),
       ),
