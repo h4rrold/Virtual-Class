@@ -33,7 +33,7 @@ class TabNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeBuilders = _routeBuilders();
-    return Consumer<Test>(builder: (context, model, wid) {
+    return Consumer<Navigation>(builder: (context, model, wid) {
       return Navigator(
         key: this.navigatorKey,
         initialRoute: TabNavigatorRoutes.main,

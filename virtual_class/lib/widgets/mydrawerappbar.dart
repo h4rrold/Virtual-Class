@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
+import 'package:provider/provider.dart';
+import 'package:virtual_class/models/test_model.dart';
 
-class HomeDrawer extends StatelessWidget {
+class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -13,31 +14,31 @@ class HomeDrawer extends StatelessWidget {
               icon: Icons.school,
               text: 'Classes',
               onTap: () {
-                Navigator.popAndPushNamed(context, '/1');
-                //Navigator.pop(context);
+                Navigator.pop(context);
+                Provider.of<Navigation>(context, listen: false).goClasses();
+                
               }),
           _createDrawerItem(
               icon: Icons.notifications,
               text: 'Notofications',
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Notifications',)));
-                
+                Provider.of<Navigation>(context, listen: false).goNotifications();
               }),
           _createDrawerItem(
               icon: Icons.settings,
               text: 'Settings',
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Settings',)));
                 Navigator.pop(context);
+                Provider.of<Navigation>(context, listen: false).goSettings();
               }),
           Divider(),
           _createDrawerItem(
               icon: Icons.exit_to_app,
               text: 'Log out',
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Exit',)));
                 Navigator.pop(context);
+                Provider.of<Navigation>(context, listen: false).goLogout();
               }),
           ListTile(
             title: Text('0.0.1'),
@@ -80,6 +81,47 @@ class HomeDrawer extends StatelessWidget {
         ],
       ),
       onTap: onTap,
+    );
+  }
+}
+
+Widget getappbar(String title){
+   return AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              title,
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 16, left: 28),
+              child: Center(
+                  child: GestureDetector(
+                      onTap: () => {},
+                      child: UserAvatar(
+                          'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
+        ],
+      );
+}
+
+class UserAvatar extends StatelessWidget {
+  String userAvatarUrl;
+  UserAvatar(this.userAvatarUrl);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 32,
+      height: 34,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: Image.network(this.userAvatarUrl).image,
+            fit: BoxFit.cover,
+            repeat: ImageRepeat.noRepeat),
+        shape: BoxShape.circle,
+      ),
     );
   }
 }

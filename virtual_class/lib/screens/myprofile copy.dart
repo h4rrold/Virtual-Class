@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/models/settings.dart';
-import 'package:virtual_class/widgets/mydrawer.dart';
+import 'package:virtual_class/models/model_app_settings.dart';
+import 'package:virtual_class/widgets/mydrawerappbar.dart';
+
 
 class MyProfile1 extends StatefulWidget {
 
@@ -17,12 +18,8 @@ class MyProfile1 extends StatefulWidget {
   Widget build(BuildContext context) {
     
     return  Scaffold(
-            appBar: AppBar(
-              leading: IconButton(icon: Icon(Icons.arrow_back),
-            onPressed: (){Navigator.pop(context);},),
-              title: Text('Чат'),
-            ),
-        backgroundColor: MyTheme.myTheme['screen'],
+            appBar: getappbar('Chat'),
+       // backgroundColor: MyTheme.myTheme['screen'],
         
       
     );

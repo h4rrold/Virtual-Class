@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:virtual_class/main.dart';
+import 'package:virtual_class/screens/app_settings.dart';
 
-class Test extends ChangeNotifier {
+class Navigation extends ChangeNotifier {
   BuildContext mainacontext;
   String text;
   int count;
+  bool val= false;
+  String apptitle = '';
 
   setText(String t) {
     this.text = t;
     notifyListeners();
+  }
+
+setTitle(String t) {
+    this.apptitle = t;
+    notifyListeners();
+  }
+
+
+  setBool(bool t) {
+    this.val = t;
   }
 
 setCount(int t) {
@@ -30,7 +43,7 @@ setCount(int t) {
   }
 
   goSettings() {
-    Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Settings',)));
+    Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => AppSettings()));
   }
 
   goLogout() {

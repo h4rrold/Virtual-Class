@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_class/screens/app_settings.dart';
+import 'package:virtual_class/widgets/mydrawerappbar.dart';
 import 'main_screen.dart';
 import 'models/drawer_pages.dart';
-import 'models/settings.dart';
+import 'models/model_app_settings.dart';
 import 'models/test_model.dart';
 import 'screens/start_home.dart';
 
 void main() => runApp(MultiProvider(
       providers: <SingleChildCloneableWidget>[
-        ChangeNotifierProvider(create: (context) => MyTheme()),
-        ChangeNotifierProvider(
-          create: (context) => Test(),
-        ),
+        ChangeNotifierProvider(create: (context) => AppSettingsModel()),
+        ChangeNotifierProvider(create: (context) => Navigation()),
         ChangeNotifierProvider(create: (context) => Home1()),
       ],
       child: MyApp(),
@@ -21,26 +21,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      routes: <String, WidgetBuilder>{
-        '/1': (BuildContext context) => MyHomePage(
-              title: 'pizda',
-            ),
-      },
-      theme: ThemeData(
-          primaryColor: Colors.blue.shade800,
-          hoverColor: Colors.blueAccent,
-          fontFamily: 'Roboto',
-          textTheme: TextTheme(
-              body1: TextStyle(color: Colors.grey[850]),
-              body2: TextStyle(color: Colors.grey[400], fontSize: 12),
-              button: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500))),
-      home: MyStartPage(title: 'Home',),
+    return Consumer<AppSettingsModel>(
+          builder:(context, model, _child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: model.getTheme,
+        home: MyStartPage(
+          title: 'Home',
+        ),
+      ),
     );
   }
 }
@@ -86,16 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // leading: IconButton(icon: Icon(Icons.arrow_back,), onPressed: (){
-        //   Navigator.pop(context);
-        //   //Provider.of<Test>(context, listen: false).setScreen(false);
-        //   //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MainScreen()));
-        // },),
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      appBar: getappbar(widget.title),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -119,9 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(Icons.arrow_forward_ios),
               onPressed: () {
-                Provider.of<Test>(context).setText('UUUUURRRAA');
-                Provider.of<Test>(context).setCount(20);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {return MainScreen();}));
+                Provider.of<Navigation>(context).setText('UUUUURRRAA');
+                Provider.of<Navigation>(context).setCount(20);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return MainScreen();
+                }));
               },
             ),
             Text(

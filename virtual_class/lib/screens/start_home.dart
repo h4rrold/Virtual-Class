@@ -4,7 +4,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/widgets/mydrawer.dart';
+import 'package:virtual_class/widgets/mydrawerappbar.dart';
 import '../models/test_model.dart';
 import '../main_screen.dart';
 
@@ -28,27 +28,9 @@ class _MyStartPageState extends State<MyStartPage> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Test>(context).setContext(context);
+    Provider.of<Navigation>(context).setContext(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              widget.title,
-            ),
-          ],
-        ),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 16, left: 28),
-              child: Center(
-                  child: GestureDetector(
-                      onTap: () => {},
-                      child: UserAvatar(
-                          'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
-        ],
-      ),
+      appBar: getappbar('Home'),
       drawer: AppDrawer(),
       body: Container(
         padding: EdgeInsets.only(top: 22, right: 16, left: 16, bottom: 24),

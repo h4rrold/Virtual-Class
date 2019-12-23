@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/settings.dart';
+import '../models/model_app_settings.dart';
 import '../models/test_model.dart';
-import '../widgets/mydrawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,35 +12,36 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   Random random = new Random();
   BoxShape shap = BoxShape.circle;
-  bool temp = false;
+  bool temp;
 
 
 
   @override
   Widget build(BuildContext context) {
-    print('SUKAAA');
+    this.temp = Provider.of<Navigation>(context, listen: false).val;
+    print('rebuild Home');
     return Scaffold(
-      drawer: AppDrawer(),
-      appBar: AppBar(
-        actions: <Widget>[
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  //color: Colors.red,
-                  image: DecorationImage(image: Image.asset("assets/xkml4m51.png").image,fit: BoxFit.contain),
-                shape: BoxShape.circle),
-              ),
-            ),
-          )
-        ],
-        // title: 'Text(Provider.of<Test>(context).text?? 'AAAAA')',
-        title: Text('Class'),
-      ),
-      backgroundColor: MyTheme.myTheme['screen'],
+      // drawer: AppDrawer(),
+      // appBar: AppBar(
+      //   actions: <Widget>[
+      //     Center(
+      //       child: Padding(
+      //         padding: const EdgeInsets.only(right: 20),
+      //         child: Container(
+      //           width: 40,
+      //           height: 40,
+      //           decoration: BoxDecoration(
+      //             //color: Colors.red,
+      //             image: DecorationImage(image: Image.asset("assets/xkml4m51.png").image,fit: BoxFit.contain),
+      //           shape: BoxShape.circle),
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      //   // title: 'Text(Provider.of<Test>(context).text?? 'AAAAA')',
+      //   title: Text('Class'),
+      // ),
+      //backgroundColor: MyTheme.myTheme['screen'],
       body: CustomScrollView(
         slivers: <Widget>[
           SliverList(
@@ -71,15 +71,16 @@ class HomeState extends State<Home> {
                               Checkbox(
                                 onChanged: (bool value) {
                                   setState(() {
-                                    this.temp = value;
+                                    Provider.of<Navigation>(context, listen: false).setBool(value);
                                   });
                                 },
                                 value: temp,
                               ),
                               Text("Що у вас нового?" + temp.toString(),
                                   style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: MyTheme.myTheme["maintext"])),
+                                      fontSize: 16.0
+                                      //color: MyTheme.myTheme["maintext"]
+                                      )),
                             ],
                           ),
                         )
@@ -124,7 +125,8 @@ class HomeState extends State<Home> {
                                       "Ефір",
                                       style: TextStyle(
                                           fontSize: 14.0,
-                                          color: MyTheme.myTheme["maintext"]),
+                                          //color: MyTheme.myTheme["maintext"]
+                                          ),
                                     )
                                   ],
                                 )),
@@ -155,7 +157,8 @@ class HomeState extends State<Home> {
                                         "Фото",
                                         style: TextStyle(
                                             fontSize: 14.0,
-                                            color: MyTheme.myTheme["maintext"]),
+                                           // color: MyTheme.myTheme["maintext"]
+                                            ),
                                       )
                                     ],
                                   ))),
@@ -174,7 +177,8 @@ class HomeState extends State<Home> {
                                         "Відмітки",
                                         style: TextStyle(
                                             fontSize: 14.0,
-                                            color: MyTheme.myTheme["maintext"]),
+                                            //color: MyTheme.myTheme["maintext"]
+                                            ),
                                       )
                                     ],
                                   )))
@@ -182,7 +186,7 @@ class HomeState extends State<Home> {
                       ),
                     ),
                     Container(
-                      color: MyTheme.myTheme["sizedbox"],
+                      //color: MyTheme.myTheme["sizedbox"],
                       height: 8.0,
                     ),
                   ],
@@ -201,8 +205,7 @@ class HomeState extends State<Home> {
                   child: Center(
                     child: Column(
                       children: <Widget>[
-                        Text(Provider.of<Test>(context, listen: false).text ??
-                            'fig vag'),
+                        
                         IconButton(
                           icon: Icon(Icons.notifications),
                           onPressed: () {
@@ -229,7 +232,7 @@ class HomeState extends State<Home> {
                   ),
                 );
               },
-              childCount: Provider.of<Test>(context, listen: false).count??5,
+              childCount: Provider.of<Navigation>(context, listen: false).count??5,
             ),
           ),
         ],

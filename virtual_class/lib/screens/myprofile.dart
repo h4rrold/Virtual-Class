@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/models/settings.dart';
-import 'package:virtual_class/widgets/mydrawer.dart';
+import 'package:virtual_class/models/model_app_settings.dart';
+import 'package:virtual_class/models/test_model.dart';
+
 
 class MyProfile extends StatefulWidget {
 
@@ -15,14 +16,14 @@ class MyProfile extends StatefulWidget {
   class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
-    
+    print('rebuild Settings');
     return 
            Scaffold(
-            drawer: AppDrawer(),
-            appBar: AppBar(
+            // drawer: AppDrawer(),
+            // appBar: AppBar(
               
-              title: Text('Settings'),
-            ),
+            //   title: Text('Settings'),
+            // ),
             body: Form(
               child: Column(
                 children: <Widget>[
@@ -44,7 +45,7 @@ class MyProfile extends StatefulWidget {
               )
 
             ),
-        backgroundColor: MyTheme.myTheme['screen'],
+       // backgroundColor: MyTheme.myTheme['screen'],
         
       
     );

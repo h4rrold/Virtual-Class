@@ -1,105 +1,13 @@
-import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/main.dart';
 import 'package:virtual_class/screens/myprofile%20copy.dart';
 import 'package:virtual_class/widgets/bottom_navigation_bar.dart';
 import 'package:virtual_class/core/tab_navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:virtual_class/widgets/mydrawer.dart';
-
 import 'models/test_model.dart';
+import 'widgets/mydrawerappbar.dart';
 
-abstract class HasVoidChange {
-  VoidCallback get refresh;
-}
 
-abstract class HasChange {
-  Function get refresh;
-}
 
-List stories = [
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/0.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/1.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/2.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/3.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/0.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/1.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/2.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/3.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/0.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/1.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/2.png'
-  },
-  {
-    'name': 'Kyiv Days',
-    'person_image': 'assets/kyiv.png',
-    'story_image': 'assets/3.png'
-  },
-];
-
-List posts = [
-  {
-    'index': 0,
-    'news':
-        'Молодіжні збірні України з баскетболу 3х3 сьогодні у Китаї розпочинають виступи на ЧС-2019',
-    'news_image': 'assets/_0.png'
-  },
-  {
-    'index': 1,
-    'news': 'В Україні оголосили штормове попередження',
-    'news_image': 'assets/_1.png'
-  },
-  {'index': 2, 'news': ':)', 'news_image': 'assets/_2.png'},
-  {'index': 3, 'news': '', 'news_image': 'assets/_3.png'},
-  {
-    'index': 4,
-    'news': 'Google впроваджує режим "інкогніто" у Картах',
-    'news_image': 'assets/_4.png'
-  }
-];
 
 // class MyTheme {
 //   static Map<String, Color> myColorsDark = {
@@ -159,7 +67,7 @@ class MainScreenState extends State<MainScreen> {
     // return Consumer<Test>(builder: (context, model, wid) {
     //  // print('build');
     //   model.setContext(context);
-    Provider.of<Test>(context).setContext(context);
+    Provider.of<Navigation>(context).setContext(context);
     return WillPopScope(
       onWillPop: () async {
         final isFirstRouteInCurrentTab =
@@ -178,11 +86,9 @@ class MainScreenState extends State<MainScreen> {
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
-        // drawerEdgeDragWidth: 0,
-        // drawer: AppDrawer(),
-        // appBar: AppBar(
-        //   title: Text('Virtual Class'),
-        // ),
+        drawerEdgeDragWidth: 0,
+        drawer: AppDrawer(),
+      appBar: getappbar('Virtual Class'),
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.home),
           _buildOffstageNavigator(TabItem.settings),
@@ -194,7 +100,6 @@ class MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildOffstageNavigator(TabItem tabItem) {
-    print('rebuild ' + tabItem.toString());
     return Offstage(
       offstage: _currentTab != tabItem,
       child: TabNavigator(

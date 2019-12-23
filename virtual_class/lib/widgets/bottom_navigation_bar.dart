@@ -1,7 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/models/settings.dart';
+import 'package:virtual_class/models/model_app_settings.dart';
 
 enum TabItem { home,message, settings }
 
@@ -20,7 +20,7 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavyBar(
-      backgroundColor: MyTheme.myTheme['bnb'],
+      //backgroundColor: MyTheme.myTheme['bnb'],
       //type: BottomNavigationBarType.fixed,
       items: [
         BottomNavyBarItem(
