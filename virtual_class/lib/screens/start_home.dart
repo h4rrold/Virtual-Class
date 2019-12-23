@@ -1,24 +1,16 @@
 
 
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtual_class/widgets/mydrawer.dart';
 import '../models/test_model.dart';
-import '../widgets/homedrawer.dart';
 import '../main_screen.dart';
+
 
 class MyStartPage extends StatefulWidget {
   MyStartPage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -30,78 +22,318 @@ class _MyStartPageState extends State<MyStartPage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    Provider.of<Test>(context).setContext(context);
     return Scaffold(
-      drawer: HomeDrawer(),
       appBar: AppBar(
-        // leading: IconButton(icon: Icon(Icons.arrow_back,), onPressed: (){
-        //   Navigator.pop(context);
-        //   //Provider.of<Test>(context, listen: false).setScreen(false);
-        //   //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MainScreen()));
-        // },),
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                Provider.of<Test>(context).setText('UUUUURRRAA');
-                Provider.of<Test>(context).setCount(20);
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {return MainScreen();}));
-              },
-            ),
             Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              widget.title,
             ),
           ],
         ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 16, left: 28),
+              child: Center(
+                  child: GestureDetector(
+                      onTap: () => {},
+                      child: UserAvatar(
+                          'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      drawer: AppDrawer(),
+      body: Container(
+        padding: EdgeInsets.only(top: 22, right: 16, left: 16, bottom: 24),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: Center(
+                      child: Text(
+                        'Recent notifications',
+                        style: TextStyle(fontSize: 22),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  NotificationList(),
+                  Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Center(
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Text('View more notifications',
+                            style: Theme.of(context).textTheme.button),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 25),
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 12),
+                          child: Text('Your classes',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .body1
+                                  .copyWith(fontSize: 21)),
+                        ),
+                        ClassCarousel()
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
+
+class UserAvatar extends StatelessWidget {
+  String userAvatarUrl;
+  UserAvatar(this.userAvatarUrl);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 32,
+      height: 34,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: Image.network(this.userAvatarUrl).image,
+            fit: BoxFit.cover,
+            repeat: ImageRepeat.noRepeat),
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+}
+
+class NotificationList extends StatefulWidget {
+  var notificationData;
+
+  @override
+  _NotificationListState createState() => _NotificationListState();
+}
+
+class _NotificationListState extends State<NotificationList> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(bottom: 12),
+            child: NotificationExcerpt(
+                'https://image.freepik.com/free-photo/_8353-6394.jpg',
+                'Pablo Molini',
+                'replied to you',
+                'Hi. Today I will sent you the circuit. Be ready to start to work!',
+                'today at 21:40'),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 12),
+            child: NotificationExcerpt(
+                'https://image.freepik.com/free-photo/_8353-6394.jpg',
+                'Pablo Molini',
+                'replied to you',
+                'Hi. Today I will sent you the circuit. Be ready to start to work!',
+                'today at 21:40'),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 12),
+            child: NotificationExcerpt(
+                'https://image.freepik.com/free-photo/_8353-6394.jpg',
+                'Pablo Molini',
+                'replied to you',
+                'Hi. Today I will sent you the circuit. Be ready to start to work!',
+                'today at 21:40'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NotificationExcerpt extends StatelessWidget {
+  String notificationAvatar;
+  String notificationAuthor;
+  String notificationText;
+  String notificationAction;
+  String notificationDate;
+  NotificationExcerpt(this.notificationAvatar, this.notificationAuthor,
+      this.notificationAction, this.notificationText, this.notificationDate);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
+      ], color: Colors.white),
+      padding: EdgeInsets.all(12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 15),
+              child: GestureDetector(
+                child: UserAvatar(this.notificationAvatar),
+                onTap: () => {},
+              )),
+          Expanded(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom: 6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text.rich(TextSpan(
+                            text: this.notificationAuthor + ' ',
+                            style: Theme.of(context).textTheme.body1.copyWith(
+                                fontSize: 12, fontWeight: FontWeight.w500),
+                            children: [
+                              TextSpan(
+                                  text: this.notificationAction,
+                                  style: Theme.of(context).textTheme.body2)
+                            ])),
+                        Text(this.notificationDate,
+                            style: Theme.of(context).textTheme.body2)
+                      ],
+                    ),
+                  ),
+                  Text(this.notificationText,
+                      style: Theme.of(context).textTheme.body2)
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+final List<String> imgList = [
+  'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
+  'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
+];
+
+class ClassCarousel extends StatefulWidget {
+  _ClassCarouselState createState() => _ClassCarouselState();
+}
+
+class _ClassCarouselState extends State<ClassCarousel> {
+  int _current = 0;
+  @override
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+
+    return result;
+  }
+
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        CarouselSlider(
+          height: 160,
+         
+          items: imgList.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+
+                    //mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Container(
+                        width: 105,
+                        height: 105,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey[400],
+                                offset: Offset(0, 1),
+                                blurRadius: 3),
+                          ],
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: Image.network(i).image,
+                              fit: BoxFit.contain,
+                              repeat: ImageRepeat.noRepeat),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Column(
+                          children: <Widget>[
+                            Text('Flutter class',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .body1
+                                    .copyWith(fontSize: 18)),
+                            Text('Sergiy Tytenko',
+                                style: Theme.of(context).textTheme.body2)
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          }).toList(),
+          onPageChanged: (index) {
+            setState(() {
+              _current = index;
+            });
+          },
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: map(imgList, (index, url) {
+            return Container(
+              width: 8.0,
+              height: 8.0,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey[400],
+                        offset: Offset(0, 1),
+                        blurRadius: 3),
+                  ],
+                  shape: BoxShape.circle,
+                  color: _current == index
+                      ? Theme.of(context).hoverColor
+                      : Colors.white),
+            );
+          }),
+        )
+      ],
+    );
+  }
+}
+

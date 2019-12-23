@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtual_class/main.dart';
 import 'package:virtual_class/models/test_model.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -12,40 +11,34 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(
-              icon: Icons.home,
-              text: 'Home',
-              onTap: () {
-                Provider.of<Test>(context, listen: false).goHome();
-                Navigator.pop(context);
-              }),
-          _createDrawerItem(
               icon: Icons.school,
               text: 'Classes',
               onTap: () {
-                Provider.of<Test>(context, listen: false).goClasses();
                 Navigator.pop(context);
+                Provider.of<Test>(context, listen: false).goClasses();
+                
               }),
           _createDrawerItem(
               icon: Icons.notifications,
               text: 'Notofications',
               onTap: () {
-                Provider.of<Test>(context, listen: false).goNotifications();
                 Navigator.pop(context);
+                Provider.of<Test>(context, listen: false).goNotifications();
               }),
           _createDrawerItem(
               icon: Icons.settings,
               text: 'Settings',
               onTap: () {
-                Provider.of<Test>(context, listen: false).goSettings();
                 Navigator.pop(context);
+                Provider.of<Test>(context, listen: false).goSettings();
               }),
           Divider(),
           _createDrawerItem(
               icon: Icons.exit_to_app,
               text: 'Log out',
               onTap: () {
-                Provider.of<Test>(context, listen: false).goLogout();
                 Navigator.pop(context);
+                Provider.of<Test>(context, listen: false).goLogout();
               }),
           ListTile(
             title: Text('0.0.1'),

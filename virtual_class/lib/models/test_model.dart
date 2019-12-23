@@ -21,10 +21,6 @@ setCount(int t) {
     this.mainacontext = c;
   }
 
-  goHome() {
-    Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Home',)));
-  }
-
   goNotifications() {
     Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Notifications',)));
   }
