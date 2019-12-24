@@ -17,10 +17,10 @@ class _AppSettingsState extends State<AppSettings> {
       appBar: getappbar('Settings'),
       body: SwitchListTile(
         title: const Text('Dark mode'),
-        value: Provider.of<AppSettingsModel>(context).getBoolVal(),
+        value: Provider.of<AppSettingsModel>(context, listen: false).getBoolVal(),
         onChanged: (bool value) {
           setState(() {
-            Provider.of<AppSettingsModel>(context).changeTheme();
+            Provider.of<AppSettingsModel>(context, listen: false).changeTheme();
             //_lights = value;
           });
         },

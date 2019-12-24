@@ -26,7 +26,7 @@ class AppSettingsModel extends ChangeNotifier {
               fontWeight: FontWeight.w500)));
 
   static final ThemeData dark = ThemeData(
-      primaryColor: Colors.orange[500],
+      primaryColor: Colors.blue.shade800,
       hoverColor: Colors.blue[400],
       brightness: Brightness.dark,
       fontFamily: 'Roboto',
@@ -43,7 +43,6 @@ class AppSettingsModel extends ChangeNotifier {
 
   Future<String> getSavedTheme() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    await Future.delayed(Duration(seconds: 1));
     mytheme = themename[pref.getString('apptheme')] ?? light;
     return pref.getString('apptheme');
   }

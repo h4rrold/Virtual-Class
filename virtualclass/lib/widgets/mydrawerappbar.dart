@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/models/navigation_model.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -37,6 +38,7 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.exit_to_app,
               text: 'Log out',
               onTap: () {
+                Provider.of<Authorization>(context).deletetoken();
                 Navigator.pop(context);
                 Provider.of<Navigation>(context, listen: false).goLogout();
               }),
