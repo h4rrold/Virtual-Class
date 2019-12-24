@@ -61,7 +61,6 @@ class AppSettingsModel extends ChangeNotifier {
   }
 
   void changeTheme() {
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
 
     mytheme = mytheme == dark ? light : dark;
      setSavedTheme(mytheme);

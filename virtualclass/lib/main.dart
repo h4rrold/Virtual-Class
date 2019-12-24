@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtualclass/screens/app_settings.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import 'main_screen.dart';
 import 'models/drawer_pages.dart';
@@ -12,7 +11,6 @@ void main() => runApp(MultiProvider(
       providers: <SingleChildCloneableWidget>[
         ChangeNotifierProvider(create: (context) => AppSettingsModel()),
         ChangeNotifierProvider(create: (context) => Navigation()),
-        ChangeNotifierProvider(create: (context) => Home1()),
       ],
       child: MyApp(),
     ));
@@ -38,14 +36,14 @@ class MyApp extends StatelessWidget {
             //                 strokeWidth: 1.0))),
             //   );
             // } else if (snapshot.hasData) {
-              // return MaterialApp(
-              //   debugShowCheckedModeBanner: false,
-              //   title: 'Flutter Demo',
-              //   theme: model.getTheme,
-              //   home: MyStartPage(
-              //     title: 'Home',
-              //   ),
-              // );
+            // return MaterialApp(
+            //   debugShowCheckedModeBanner: false,
+            //   title: 'Flutter Demo',
+            //   theme: model.getTheme,
+            //   home: MyStartPage(
+            //     title: 'Home',
+            //   ),
+            // );
             // } else if (snapshot.hasError) {
             //   return Text("${snapshot.error}");
             // }
@@ -73,15 +71,15 @@ class MyApp extends StatelessWidget {
               ///when data is being fetched
               case ConnectionState.waiting:
                 return Container(
-                color: Colors.white,
-                child: Center(
-                    child: SizedBox(
-                        height: 200.0,
-                        width: 200.0,
-                        child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(Colors.blue),
-                            strokeWidth: 1.0))),
-              );
+                  color: Colors.white,
+                  child: Center(
+                      child: SizedBox(
+                          height: 200.0,
+                          width: 200.0,
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.blue),
+                              strokeWidth: 1.0))),
+                );
 
               case ConnectionState.done:
 
