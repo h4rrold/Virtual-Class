@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/screens/signin.dart';
@@ -8,14 +9,16 @@ import 'models/model_app_settings.dart';
 import 'models/navigation_model.dart';
 import 'screens/start_home.dart';
 
-void main() => runApp(MultiProvider(
-      providers: <SingleChildCloneableWidget>[
-        ChangeNotifierProvider(create: (context) => AppSettingsModel()),
-        ChangeNotifierProvider(create: (context) => Navigation()),
-        ChangeNotifierProvider(create: (context) => Authorization()),
-      ],
-      child: MyApp(),
-    ));
+void main() {
+  runApp(MultiProvider(
+    providers: <SingleChildCloneableWidget>[
+      ChangeNotifierProvider(create: (context) => AppSettingsModel()),
+      ChangeNotifierProvider(create: (context) => Navigation()),
+      ChangeNotifierProvider(create: (context) => Authorization()),
+    ],
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   Widget body;
@@ -27,93 +30,98 @@ class MyApp extends StatelessWidget {
       body = MyStartPage(
         title: 'Home',
       );
-    else body = SignIn();
+    else
+      body = SignIn();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown
+      ]);
     return Consumer<Authorization>(builder: (context, model, _child) {
-    //print('тема ' + model.getTheme.toString());
-    return FutureBuilder(
-        future: checkData(context),
-        builder: (context, snapshot) {
-          // if (!snapshot.hasData) {
-          //   return Container(
-          //     color: Colors.white,
-          //     child: Center(
-          //         child: SizedBox(
-          //             height: 200.0,
-          //             width: 200.0,
-          //             child: CircularProgressIndicator(
-          //                 valueColor: AlwaysStoppedAnimation(Colors.blue),
-          //                 strokeWidth: 1.0))),
-          //   );
-          // } else if (snapshot.hasData) {
-          // return MaterialApp(
-          //   debugShowCheckedModeBanner: false,
-          //   title: 'Flutter Demo',
-          //   theme: model.getTheme,
-          //   home: MyStartPage(
-          //     title: 'Home',
-          //   ),
-          // );
-          // } else if (snapshot.hasError) {
-          //   return Text("${snapshot.error}");
-          // }
+      //print('тема ' + model.getTheme.toString());
+      return FutureBuilder(
+          future: checkData(context),
+          builder: (context, snapshot) {
+            // if (!snapshot.hasData) {
+            //   return Container(
+            //     color: Colors.white,
+            //     child: Center(
+            //         child: SizedBox(
+            //             height: 200.0,
+            //             width: 200.0,
+            //             child: CircularProgressIndicator(
+            //                 valueColor: AlwaysStoppedAnimation(Colors.blue),
+            //                 strokeWidth: 1.0))),
+            //   );
+            // } else if (snapshot.hasData) {
+            // return MaterialApp(
+            //   debugShowCheckedModeBanner: false,
+            //   title: 'Flutter Demo',
+            //   theme: model.getTheme,
+            //   home: MyStartPage(
+            //     title: 'Home',
+            //   ),
+            // );
+            // } else if (snapshot.hasError) {
+            //   return Text("${snapshot.error}");
+            // }
 
-          // if(snapshot.hasData) return MaterialApp(
-          //     debugShowCheckedModeBanner: false,
-          //     title: 'Flutter Demo',
+            // if(snapshot.hasData) return MaterialApp(
+            //     debugShowCheckedModeBanner: false,
+            //     title: 'Flutter Demo',
 
-          //     theme: model.getTheme,
-          //     home: MyStartPage(
-          //       title: 'Home',
-          //     ),
-          //   );
-          switch (snapshot.connectionState) {
+            //     theme: model.getTheme,
+            //     home: MyStartPage(
+            //       title: 'Home',
+            //     ),
+            //   );
+            switch (snapshot.connectionState) {
 
-            ///when the future is null
-            case ConnectionState.none:
-              return Text(
-                'null',
-                textAlign: TextAlign.center,
-              );
-
-            case ConnectionState.active:
-
-            ///when data is being fetched
-            case ConnectionState.waiting:
-              return Container(
-                color: Colors.white,
-                child: Center(
-                    child: SizedBox(
-                        height: 200.0,
-                        width: 200.0,
-                        child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(Colors.blue),
-                            strokeWidth: 1.0))),
-              );
-
-            case ConnectionState.done:
-
-              ///task is complete with an error (eg. When you
-              ///are offline)
-              if (snapshot.hasError)
+              ///when the future is null
+              case ConnectionState.none:
                 return Text(
-                  'Error:\n\n${snapshot.error}',
+                  'null',
                   textAlign: TextAlign.center,
                 );
 
-              ///task is complete with some data
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Flutter Demo',
-                theme: Provider.of<AppSettingsModel>(context).getTheme,
-                //theme: model.getTheme,
-                home: body,
-              );
-          }
-        });
+              case ConnectionState.active:
+
+              ///when data is being fetched
+              case ConnectionState.waiting:
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                      child: SizedBox(
+                          height: 200.0,
+                          width: 200.0,
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.blue),
+                              strokeWidth: 1.0))),
+                );
+
+              case ConnectionState.done:
+
+                ///task is complete with an error (eg. When you
+                ///are offline)
+                if (snapshot.hasError)
+                  return Text(
+                    'Error:\n\n${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  );
+
+                ///task is complete with some data
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: Provider.of<AppSettingsModel>(context).getTheme,
+                  //theme: model.getTheme,
+                  home: body,
+                );
+            }
+          });
     });
   }
 }
