@@ -87,24 +87,24 @@ class _MyStartPageState extends State<MyStartPage> {
   }
 }
 
-class UserAvatar extends StatelessWidget {
-  String userAvatarUrl;
-  UserAvatar(this.userAvatarUrl);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 32,
-      height: 34,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: Image.network(this.userAvatarUrl).image,
-            fit: BoxFit.cover,
-            repeat: ImageRepeat.noRepeat),
-        shape: BoxShape.circle,
-      ),
-    );
-  }
-}
+// class UserAvatar extends StatelessWidget {
+//   String userAvatarUrl;
+//   UserAvatar(this.userAvatarUrl);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 32,
+//       height: 34,
+//       decoration: BoxDecoration(
+//         image: DecorationImage(
+//             image: Image.network(this.userAvatarUrl).image,
+//             fit: BoxFit.cover,
+//             repeat: ImageRepeat.noRepeat),
+//         shape: BoxShape.circle,
+//       ),
+//     );
+//   }
+// }
 
 class NotificationList extends StatefulWidget {
   var notificationData;
