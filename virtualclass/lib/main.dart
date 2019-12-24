@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppSettingsModel>(builder: (context, model, _child) {
       //print('тема ' + model.getTheme.toString());
-      // return FutureBuilder(
-      //     future: model.getSavedTheme(),
-      //     builder: (context, snapshot) {
+      return FutureBuilder(
+          future: model.getSavedTheme(),
+          builder: (context, snapshot) {
             // if (!snapshot.hasData) {
             //   return Container(
             //     color: Colors.white,
@@ -38,14 +38,14 @@ class MyApp extends StatelessWidget {
             //                 strokeWidth: 1.0))),
             //   );
             // } else if (snapshot.hasData) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Flutter Demo',
-                theme: model.getTheme,
-                home: MyStartPage(
-                  title: 'Home',
-                ),
-              );
+              // return MaterialApp(
+              //   debugShowCheckedModeBanner: false,
+              //   title: 'Flutter Demo',
+              //   theme: model.getTheme,
+              //   home: MyStartPage(
+              //     title: 'Home',
+              //   ),
+              // );
             // } else if (snapshot.hasError) {
             //   return Text("${snapshot.error}");
             // }
@@ -59,51 +59,51 @@ class MyApp extends StatelessWidget {
             //       title: 'Home',
             //     ),
             //   );
-            // switch (snapshot.connectionState) {
+            switch (snapshot.connectionState) {
 
-            //   ///when the future is null
-            //   case ConnectionState.none:
-            //     return Text(
-            //       'null',
-            //       textAlign: TextAlign.center,
-            //     );
+              ///when the future is null
+              case ConnectionState.none:
+                return Text(
+                  'null',
+                  textAlign: TextAlign.center,
+                );
 
-            //   case ConnectionState.active:
+              case ConnectionState.active:
 
-            //   ///when data is being fetched
-            //   case ConnectionState.waiting:
-            //     return Container(
-            //     color: Colors.white,
-            //     child: Center(
-            //         child: SizedBox(
-            //             height: 200.0,
-            //             width: 200.0,
-            //             child: CircularProgressIndicator(
-            //                 valueColor: AlwaysStoppedAnimation(Colors.blue),
-            //                 strokeWidth: 1.0))),
-            //   );
+              ///when data is being fetched
+              case ConnectionState.waiting:
+                return Container(
+                color: Colors.white,
+                child: Center(
+                    child: SizedBox(
+                        height: 200.0,
+                        width: 200.0,
+                        child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.blue),
+                            strokeWidth: 1.0))),
+              );
 
-            //   case ConnectionState.done:
+              case ConnectionState.done:
 
-            //     ///task is complete with an error (eg. When you
-            //     ///are offline)
-            //     if (snapshot.hasError)
-            //       return Text(
-            //         'Error:\n\n${snapshot.error}',
-            //         textAlign: TextAlign.center,
-            //       );
+                ///task is complete with an error (eg. When you
+                ///are offline)
+                if (snapshot.hasError)
+                  return Text(
+                    'Error:\n\n${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  );
 
-            //     ///task is complete with some data
-            //     return MaterialApp(
-            //       debugShowCheckedModeBanner: false,
-            //       title: 'Flutter Demo',
-            //       theme: model.getTheme,
-            //       home: MyStartPage(
-            //         title: 'Home',
-            //       ),
-            //     );
-            // }
-          // });
+                ///task is complete with some data
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: model.getTheme,
+                  home: MyStartPage(
+                    title: 'Home',
+                  ),
+                );
+            }
+          });
     });
   }
 }
