@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
                               .copyWith(fontSize: 16),
                           recognizer: TapGestureRecognizer()..onTap = () {
                            
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>SignUp()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(fullscreenDialog: true, builder: (BuildContext context)=>SignUp()));
                           })
                     ]),
               ),

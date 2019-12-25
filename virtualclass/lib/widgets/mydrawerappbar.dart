@@ -38,9 +38,32 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.exit_to_app,
               text: 'Log out',
               onTap: () {
-                Provider.of<Authorization>(context).deletetoken();
                 Navigator.pop(context);
-                Provider.of<Navigation>(context, listen: false).goLogout();
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Log out"),
+                        content: new Text(
+                            "This will return you to the login screen"),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: new Text("Yes"),
+                            onPressed: () {
+                              Provider.of<Authorization>(context).deletetoken();
+                              // Navigator.pop(context);
+                              // Provider.of<Navigation>(context, listen: false).goLogout();
+                            },
+                          ),
+                          FlatButton(
+                            child: new Text("Close"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      );
+                    });
               }),
           ListTile(
             title: Text('0.0.1'),

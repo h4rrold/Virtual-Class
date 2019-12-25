@@ -60,7 +60,7 @@ class _SignUpState extends State<SignUp> {
                               ..onTap = () {
                                 Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
+                                    MaterialPageRoute(fullscreenDialog: true,
                                         builder: (BuildContext context) =>
                                             SignIn()));
                               })
