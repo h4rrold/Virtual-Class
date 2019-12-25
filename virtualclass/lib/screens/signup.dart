@@ -1,5 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/screens/signin.dart';
 
 class SignUp extends StatefulWidget {
@@ -7,25 +10,30 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: Image.network(
-                        'https://static.locals.md/2019/11/photo-1519389950473-47ba0277781c.jpeg')
-                    .image,
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.5), BlendMode.darken),
-                repeat: ImageRepeat.noRepeat)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+
+ bool loading;
+
+  void load() {
+    setState(() {
+      loading = true;
+      Provider.of<Authorization>(context, listen: false).test().then((_) {
+        setState(() {
+          loading= false;
+          //Provider.of<Authorization>(context,listen:false).setusertoken('qwerty');
+        });
+      });
+    });
+  }
+
+  List<Widget> getContent() {
+    if (loading)
+      return [
+        Center(
+          child: SpinKitFadingCube(size: 100,color: Colors.white,)
+        )
+      ];
+    else
+      return <Widget>[
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
               padding:
@@ -40,7 +48,7 @@ class _SignUpState extends State<SignUp> {
                       blurRadius: 3),
                 ],
               ),
-              child: SignInForm(),
+              child: SignUpForm(refresh: load,),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
@@ -68,18 +76,48 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             )
-          ],
+          ];
+  }
+
+  @override
+  void initState() {
+    loading = false;
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: Image.asset('assets/start.jpeg').image,
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.5), BlendMode.darken),
+                repeat: ImageRepeat.noRepeat)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: getContent()
         ),
       ),
     ));
   }
 }
 
-class SignInForm extends StatefulWidget {
-  _SignInFormState createState() => _SignInFormState();
+class SignUpForm extends StatefulWidget {
+
+final Function refresh;
+
+  const SignUpForm({Key key, this.refresh}) : super(key: key);
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   RegExp allowedSybm = RegExp(r'^[a-zA-Z0-9]+$');
   @override
@@ -106,6 +144,7 @@ class _SignInFormState extends State<SignInForm> {
               validator: (val) {
                 if (val.isEmpty) {
                   return "Firstname cannot be empty";
+                
                 } else {
                   return null;
                 }
@@ -132,7 +171,7 @@ class _SignInFormState extends State<SignInForm> {
               },
               keyboardType: TextInputType.text,
             ),
-          ),
+          ),     
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: TextFormField(
@@ -185,15 +224,17 @@ class _SignInFormState extends State<SignInForm> {
           ),
           OutlineButton(
             onPressed: () {
-              this._formKey.currentState.validate();
+              if(this._formKey.currentState.validate()){
+                widget.refresh();
+              }
             },
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6)
+            ),
             borderSide: BorderSide(color: Theme.of(context).hoverColor),
             padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
             child: Text('SIGN UP',
-                style:
-                    Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
+                style: Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
           )
         ],
       ),

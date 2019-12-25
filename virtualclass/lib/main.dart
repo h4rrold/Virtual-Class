@@ -115,7 +115,7 @@ class MyApp extends StatelessWidget {
                 ///task is complete with some data
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
+                  title: 'Virtual Class',
                   theme: Provider.of<AppSettingsModel>(context).getTheme,
                   //theme: model.getTheme,
                   home: body,

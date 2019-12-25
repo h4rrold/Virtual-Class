@@ -4,14 +4,93 @@ import 'package:provider/provider.dart';
 import 'package:virtualclass/main_screen.dart';
 import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/screens/signup.dart';
-
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:virtualclass/screens/start_home.dart';
 
 class SignIn extends StatefulWidget {
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  bool loading;
+
+  void load() {
+    setState(() {
+      loading = true;
+      Provider.of<Authorization>(context, listen: false).test().then((_) {
+        setState(() {
+          loading = false;
+          Provider.of<Authorization>(context, listen: false)
+              .setusertoken('qwerty');
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MyStartPage()));
+        });
+      });
+    });
+  }
+
+  List<Widget> getContent() {
+    if (loading)
+      return [
+        Center(
+            child: SpinKitFadingCube(
+          size: 100,
+          color: Colors.white,
+        ))
+      ];
+    else
+      return [
+        Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 32),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6.0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
+            ],
+          ),
+          child: SignInForm(
+            refresh: load,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Center(
+            child: RichText(
+              text: TextSpan(
+                  text: 'Don\'t have an acount? ',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  children: [
+                    TextSpan(
+                        text: 'Sing up',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            .copyWith(fontSize: 16),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    fullscreenDialog: true,
+                                    builder: (BuildContext context) =>
+                                        SignUp()));
+                          })
+                  ]),
+            ),
+          ),
+        )
+      ];
+  }
+
+  @override
+  void initState() {
+    loading = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,61 +98,25 @@ class _SignInState extends State<SignIn> {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: Image.network(
-                      'https://static.locals.md/2019/11/photo-1519389950473-47ba0277781c.jpeg')
-                  .image,
+              image: Image.asset("assets/start.jpeg").image,
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.5), BlendMode.darken),
               repeat: ImageRepeat.noRepeat)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 32),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey[400],
-                    offset: Offset(0, 1),
-                    blurRadius: 3),
-              ],
-            ),
-            child: SignInForm(),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Center(
-              child: RichText(
-                text: TextSpan(
-                    text: 'Don\'t have an acount? ',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                    children: [
-                      TextSpan(
-                          text: 'Sing up',
-                          style: Theme.of(context)
-                              .textTheme
-                              .button
-                              .copyWith(fontSize: 16),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                           
-                            Navigator.pushReplacement(context, MaterialPageRoute(fullscreenDialog: true, builder: (BuildContext context)=>SignUp()));
-                          })
-                    ]),
-              ),
-            ),
-          )
-        ],
+        children: getContent(),
       ),
     ));
   }
 }
 
 class SignInForm extends StatefulWidget {
+  const SignInForm({Key key, this.refresh}) : super(key: key);
+
   _SignInFormState createState() => _SignInFormState();
+
+  final Function refresh;
 }
 
 class _SignInFormState extends State<SignInForm> {
@@ -134,8 +177,7 @@ class _SignInFormState extends State<SignInForm> {
                 } else if (!(val.length >= 8)) {
                   return "Password should have at least 8 symbols";
                 } else {
-                  Provider.of<Authorization>(context).setusertoken('qwerty');
-                  //Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>MainScreen()));
+                  return null;
                 }
               },
               keyboardType: TextInputType.text,
@@ -143,15 +185,17 @@ class _SignInFormState extends State<SignInForm> {
           ),
           OutlineButton(
             onPressed: () {
-              this._formKey.currentState.validate();
+              if (this._formKey.currentState.validate()) {
+                widget.refresh();
+              }
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6)
-            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
             borderSide: BorderSide(color: Theme.of(context).hoverColor),
             padding: EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
             child: Text('SIGN IN',
-                style: Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
+                style:
+                    Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
           )
         ],
       ),
