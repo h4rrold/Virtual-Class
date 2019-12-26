@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
 
@@ -25,6 +28,7 @@ class ClassCreatePage extends StatelessWidget{
       ),
     )
     );
+    
   }
 
 }
@@ -32,9 +36,14 @@ class ClassCreateForm extends StatefulWidget{
   _ClassCreateFormState createState() => _ClassCreateFormState();
 }
 class _ClassCreateFormState extends State<ClassCreateForm>{
+  bool loading=false;
+
+  String name;
+  String bio;
  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    if(!loading)
     return Form(
       key: this._formKey,
       child: Container(
@@ -59,7 +68,7 @@ class _ClassCreateFormState extends State<ClassCreateForm>{
                   else if (val.length < 3){
                     return "Class name must have at least 3 symbols";
                   } else {
-                    return null;
+                    name = val;
                   }
                 },
                 keyboardType: TextInputType.text,
@@ -79,7 +88,7 @@ class _ClassCreateFormState extends State<ClassCreateForm>{
                   ),
                 ),
                 validator: (val) {
-                    return null;
+                    bio = val;
                 },
                 keyboardType: TextInputType.multiline,
                 
@@ -88,7 +97,19 @@ class _ClassCreateFormState extends State<ClassCreateForm>{
            
            
             OutlineButton(
-              onPressed: () => (this._formKey.currentState.validate()),
+              onPressed: () async{
+                if (this._formKey.currentState.validate()){
+                  setState(() {
+                    loading = true;
+                    Provider.of<ClassesModel>(context, listen: false).addclass(name, bio).then((response){
+                      // if(response != 400) Navigator.pop(context);
+                    });
+                  });
+                  
+                
+                Navigator.pop(context);
+                }
+                },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6)
               ),
@@ -101,6 +122,11 @@ class _ClassCreateFormState extends State<ClassCreateForm>{
         ),
       ),
     );
+    else return Center(
+            child: SpinKitFadingCube(
+          size: 100,
+          color: Colors.white,
+        ));
   
   }
 

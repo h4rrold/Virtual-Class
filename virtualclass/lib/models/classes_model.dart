@@ -14,4 +14,12 @@ class ClassesModel extends ChangeNotifier {
     userClassesData = await HttpService.getrequest('classes?amount=5');
     return userClassesData;
   }
+
+  Future<dynamic> addclass(String name, String bio)async{
+  
+    var response = await HttpService.postrequest('classes',
+        body: '{"name": "$name", "description": "$bio"}');
+        print(response);
+    return response;
+  }
 }
