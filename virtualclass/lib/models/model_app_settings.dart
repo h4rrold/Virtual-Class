@@ -17,6 +17,7 @@ class AppSettingsModel extends ChangeNotifier {
       highlightColor: Colors.blue[400],
       hoverColor: Colors.blue[400],
       fontFamily: 'Roboto',
+      backgroundColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(
           errorStyle: TextStyle(),
           labelStyle: TextStyle(color: Colors.blue[400]),
