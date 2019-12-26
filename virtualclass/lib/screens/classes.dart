@@ -12,35 +12,35 @@ class _MyClassesState extends State<MyClasses> {
     {
       'id': 1,
       'className': 'Flutter class',
-      'clasImage':
+      'classImage':
           'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
       'classOwnerName': 'Sergiy Tytenko',
     },
     {
       'id': 2,
       'className': 'Flutter class',
-      'clasImage':
+      'classImage':
           'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
       'classOwnerName': 'Sergiy Tytenko',
     },
     {
       'id': 3,
       'className': 'Flutter class',
-      'clasImage':
+      'classImage':
           'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
       'classOwnerName': 'Sergiy Tytenko',
     },
     {
       'id': 4,
       'className': 'Flutter class',
-      'clasImage':
+      'classImage':
           'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
       'classOwnerName': 'Sergiy Tytenko',
     },
     {
       'id': 5,
       'className': 'Flutter class',
-      'clasImage':
+      'classImage':
           'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
       'classOwnerName': 'Sergiy Tytenko',
     }
@@ -59,7 +59,7 @@ class _MyClassesState extends State<MyClasses> {
           itemBuilder: (context, int index) => UserClassItem(
               _userClassesData[index]['id'],
               _userClassesData[index]['className'],
-              _userClassesData[index]['classOwner'],
+              _userClassesData[index]['classOwnerName'],
               _userClassesData[index]['classImage'],
               index),
           staggeredTileBuilder: (int index) =>
@@ -160,7 +160,7 @@ class UserClassItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(this._classImage,
+                        Text(this._className,
                             style: Theme.of(context).textTheme.body1.copyWith(
                                 fontSize: 23, fontWeight: FontWeight.w500)),
                         Text(this._classOwnerName,
