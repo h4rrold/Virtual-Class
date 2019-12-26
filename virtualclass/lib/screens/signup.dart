@@ -16,7 +16,7 @@ class _SignUpState extends State<SignUp> {
   void load() {
     setState(() {
       loading = true;
-      Provider.of<Authorization>(context, listen: false).test().then((_) {
+      Provider.of<Authorization>(context, listen: false).signin().then((_) {
         setState(() {
           loading= false;
           //Provider.of<Authorization>(context,listen:false).setusertoken('qwerty');

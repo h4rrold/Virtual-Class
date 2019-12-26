@@ -51,8 +51,6 @@ class AppDrawer extends StatelessWidget {
                             child: new Text("Yes"),
                             onPressed: () {
                               Provider.of<Authorization>(context).deletetoken();
-                              // Navigator.pop(context);
-                              // Provider.of<Navigation>(context, listen: false).goLogout();
                             },
                           ),
                           FlatButton(

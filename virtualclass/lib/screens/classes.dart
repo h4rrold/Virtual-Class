@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:virtualclass/screens/addclass.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
 class MyClasses extends StatefulWidget {
@@ -29,7 +30,7 @@ class _MyClassesState extends State<MyClasses> {
         ),
         floatingActionButton: FloatingActionButton(
       onPressed: () {
-        // Add your onPressed code here!
+        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {return ClassCreatePage();}));
       },
       child: Icon(Icons.add),
       backgroundColor: Theme.of(context).hoverColor,

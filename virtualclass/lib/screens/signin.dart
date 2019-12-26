@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtualclass/main_screen.dart';
 import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/screens/signup.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,14 +13,17 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   bool loading;
 
-  void load() {
+  void load(String email, String password) {
     setState(() {
       loading = true;
-      Provider.of<Authorization>(context, listen: false).test().then((_) {
+      Provider.of<Authorization>(context, listen: false)
+          .signin(email: email, password: password)
+          .then((response) {
         setState(() {
           loading = false;
+          print(response);
           Provider.of<Authorization>(context, listen: false)
-              .setusertoken('qwerty');
+              .setusertoken(response['access_token']);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => MyStartPage()));
         });
@@ -120,6 +122,8 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  String email;
+  String password;
   final _formKey = GlobalKey<FormState>();
   RegExp allowedSybm = RegExp(r'^[a-zA-Z0-9]+$');
   @override
@@ -149,7 +153,7 @@ class _SignInFormState extends State<SignInForm> {
                 } else if (!val.contains('@')) {
                   return 'Enter correct email';
                 } else {
-                  return null;
+                  email = val;
                 }
               },
               keyboardType: TextInputType.emailAddress,
@@ -177,7 +181,7 @@ class _SignInFormState extends State<SignInForm> {
                 } else if (!(val.length >= 8)) {
                   return "Password should have at least 8 symbols";
                 } else {
-                  return null;
+                  password = val;
                 }
               },
               keyboardType: TextInputType.text,
@@ -186,7 +190,7 @@ class _SignInFormState extends State<SignInForm> {
           OutlineButton(
             onPressed: () {
               if (this._formKey.currentState.validate()) {
-                widget.refresh();
+                widget.refresh(email, password);
               }
             },
             shape:

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtualclass/core/http_service.dart';
 
 class Authorization extends ChangeNotifier {
   bool signedin;
+  
 
 
 
@@ -35,8 +35,9 @@ class Authorization extends ChangeNotifier {
       return false;
   }
 
-  Future<void> test()async{
-    await Future.delayed(Duration(seconds: 2));
+  Future<dynamic> signin({@required String email, @required String password})async{
+    Future.delayed(Duration(seconds: 1));
+      return await HttpService.postrequest('login', body: '{"email": "$email", "password": "$password"}');
   }
 
   void deletetoken() async {
