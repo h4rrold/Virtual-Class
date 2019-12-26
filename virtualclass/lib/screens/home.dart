@@ -21,15 +21,16 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
   var posts;
 
   Future<void> getPosts() async {
-    var currentClassId = Provider.of<ClassesModel>(context, listen: false).currentClassId;
-    classPostData =
-        await Provider.of<PostsModel>(context, listen: false).getPosts(currentClassId);
+    var currentClassId =
+        Provider.of<ClassesModel>(context, listen: false).currentClassId;
+    classPostData = await Provider.of<PostsModel>(context, listen: false)
+        .getPosts(currentClassId);
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-          child: FutureBuilder(
+      child: FutureBuilder(
         future: getPosts(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -68,7 +69,8 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
               return Scaffold(
                   body: ListView.builder(
                       //controller: _scrollController,
-                      padding: EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
+                      padding:
+                          EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
                       itemCount: classPostData.length,
                       itemBuilder: (context, index) {
                         print(index);
@@ -84,16 +86,16 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                         }
                         print('--' + _array.length.toString());
                         return Container(
-                          padding: EdgeInsets.only(bottom: 18.0),
-                          child: ClassPost(
+                            padding: EdgeInsets.only(bottom: 18.0),
+                            child: ClassPost(
                               _array[i]['id'],
-                              _array[i]['post_title'],
-                              _array[i]['user_avatar'],
+                              _array[i]['title'],
+                              _array[i]['user']['avatar'],
                               _array[i]['created_at'],
-                              _array[i]['attachment_url'],
+                              '',
                               _array[i]['content'],
-                              _array[i]['views_amount']),
-                        );
+                              Random().nextInt(30),
+                            ));
                       }),
                   floatingActionButton: FloatingActionButton(
                     onPressed: () {},
@@ -102,7 +104,8 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                   ));
           }
         },
-      ), onRefresh: getPosts,
+      ),
+      onRefresh: getPosts,
     );
   }
 }
@@ -122,16 +125,6 @@ class ClassPost extends StatefulWidget {
 }
 
 class _ClassPostState extends State<ClassPost> {
-  YoutubePlayerController _controller;
-  initState() => _controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(widget.postAttachment),
-        flags: YoutubePlayerFlags(
-          autoPlay: false,
-          forceHideAnnotation: true,
-        ),
-      );
-  _increaseViewAmount() => setState(() => ++widget.postViewsAmount);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -186,38 +179,19 @@ class _ClassPostState extends State<ClassPost> {
       );
 
   Widget postContent(context) => Container(
+        width: double.infinity,
         padding: EdgeInsets.only(bottom: 12.0),
         child: Column(
           children: <Widget>[
-            (widget.postAttachment.isNotEmpty)
-                ? Container(
-                    padding: EdgeInsets.only(bottom: 14.0),
-                    child: YoutubePlayer(
-                      controller: _controller,
-                      showVideoProgressIndicator: true,
-                      topActions: <Widget>[
-                        IconButton(
-                          icon: Icon(
-                            Icons.link,
-                            color: Colors.red,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              widget.postViewsAmount = 1;
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  )
-                : SizedBox(width: 0, height: 0),
             Container(
+                width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
                   (widget.postText.length > 100)
                       ? widget.postText.substring(0, 100) + "..."
                       : widget.postText,
                   style: Theme.of(context).textTheme.body2,
+                  textAlign: TextAlign.left,
                 ))
           ],
         ),
@@ -276,64 +250,7 @@ class SingleClassPostPage extends StatelessWidget {
   String createdDate;
   @override
   Widget build(BuildContext context) {
-    YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(this.postAttachment),
-      flags: YoutubePlayerFlags(
-        autoPlay: false,
-        forceHideAnnotation: true,
-      ),
-    );
     return Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Text(
-                'Some title',
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 16, left: 28),
-                child: Center(
-                    child: GestureDetector(
-                        onTap: () => {},
-                        child: UserAvatar(
-                            'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text('Drawer Header'),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-              ),
-              ListTile(
-                title: Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
         body: ListView(
           children: <Widget>[
             Container(
@@ -368,31 +285,15 @@ class SingleClassPostPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(bottom: 12.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
                         this.postText,
                         style: Theme.of(context).textTheme.body2,
+                        textAlign: TextAlign.left,
                       )),
-                  (this.postAttachment.isNotEmpty)
-                      ? Container(
-                          padding: EdgeInsets.only(
-                              bottom: 14, top: 14.0, left: 8.0, right: 8.0),
-                          child: YoutubePlayer(
-                            controller: _controller,
-                            showVideoProgressIndicator: true,
-                            topActions: <Widget>[
-                              IconButton(
-                                icon: Icon(
-                                  Icons.link,
-                                  color: Colors.red,
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      : SizedBox(width: 0, height: 0),
                 ],
               ),
             ),
