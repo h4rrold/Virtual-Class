@@ -12,7 +12,8 @@ class ClassesModel extends ChangeNotifier{
   }
 
   Future<List> getSomeclasses()async{
-      return await HttpService.getrequest('classes?amount=5');
+      userClassesData = await HttpService.getrequest('classes?amount=5');;
+      return userClassesData;
   }
 
 }

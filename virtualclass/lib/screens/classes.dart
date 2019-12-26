@@ -145,7 +145,7 @@ class UserClassItem extends StatelessWidget {
                       children: [
                         Text(this._className,
                             style: Theme.of(context).textTheme.body1.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w500)),
+                                fontSize: 16, fontWeight: FontWeight.w500),textAlign: TextAlign.center,),
                         Text(this._classOwnerName,
                             style: Theme.of(context).textTheme.body2)
                       ],
@@ -166,7 +166,7 @@ class UserClassItem extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 24.0),
+                    margin: EdgeInsets.only(top: 18.0,bottom: 55.00),
                     decoration: BoxDecoration(
                         image: DecorationImage(
                       image: Image.network(this._classImage).image,

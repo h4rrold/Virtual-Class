@@ -24,7 +24,7 @@ class HttpService {
      print(body);
      print(domen+uri);
 
-    http.Response response = await http.post(domen + uri, body: body, headers: {"Content-type": "application/json", "Accept": "application/json"});
+    http.Response response = await http.post(domen + uri, body: body, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
     if (response.statusCode == 200) {
       print(response.statusCode);
       return json.decode(response.body);

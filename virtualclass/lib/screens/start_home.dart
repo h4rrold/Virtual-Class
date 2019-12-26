@@ -3,7 +3,9 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import '../models/navigation_model.dart';
 
@@ -19,92 +21,118 @@ class MyStartPage extends StatefulWidget {
 
 class _MyStartPageState extends State<MyStartPage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  List <dynamic> _homeClassData;
+ Future<void> getclasses() async {
+    _homeClassData =
+        await Provider.of<ClassesModel>(context, listen: false).getSomeclasses();
   }
+  
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Navigation>(context).setContext(context);
-    return Scaffold(
-      appBar: getappbar('Home'),
-      drawer: AppDrawer(),
-      body: Container(
-        padding: EdgeInsets.only(top: 22, right: 16, left: 16, bottom: 24),
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16),
-                    child: Center(
-                      child: Text(
-                        'Recent notifications',
-                        style: Theme.of(context).textTheme.body1.copyWith(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+     Provider.of<Navigation>(context).setContext(context);
+    // TODO: implement build
+    return RefreshIndicator(
+      child: FutureBuilder(
+          future: getclasses(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+
+              ///when the future is null
+              case ConnectionState.none:
+                return Text(
+                  'null',
+                  textAlign: TextAlign.center,
+                );
+
+              case ConnectionState.active:
+
+              ///when data is being fetched
+              case ConnectionState.waiting:
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                      child: SpinKitFadingCube(
+                    size: 100,
+                    color: Colors.blue,
+                  )),
+                );
+
+              case ConnectionState.done:
+
+                ///task is complete with an error (eg. When you
+                ///are offline)
+                if (snapshot.hasError)
+                  return Text(
+                    'Error:\n\n${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  );
+
+                ///task is complete with some data
+                 return Scaffold(
+        appBar: getappbar('Home'),
+        drawer: AppDrawer(),
+        body: Container(
+    padding: EdgeInsets.only(top: 22, right: 16, left: 16, bottom: 24),
+    child: Column(
+      children: <Widget>[
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: 16),
+                child: Center(
+                  child: Text(
+                    'Recent notifications',
+                    style: Theme.of(context).textTheme.body1.copyWith(fontSize: 22),
+                    textAlign: TextAlign.center,
                   ),
-                  NotificationList(),
-                  Padding(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Center(
-                      child: InkWell(
-                        onTap: () => {},
-                        child: Text('View more notifications',
-                            style: Theme.of(context).textTheme.button),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 25),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 12),
-                          child: Text('Your classes',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .body1
-                                  .copyWith(fontSize: 21)),
-                        ),
-                        ClassCarousel()
-                      ],
-                    ),
-                  )
-                ],
+                ),
               ),
-            )
-          ],
+              NotificationList(),
+              Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: Center(
+                  child: InkWell(
+                    onTap: () => {},
+                    child: Text('View more notifications',
+                        style: Theme.of(context).textTheme.button),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 25),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 12),
+                      child: Text('Your classes',
+                          style: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .copyWith(fontSize: 21)),
+                    ),
+                    ClassCarousel()
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    ),
         ),
-      ),
+      );
+            }
+            ;
+          }),
+      onRefresh: getclasses,
     );
   }
 }
 
-// class UserAvatar extends StatelessWidget {
-//   String userAvatarUrl;
-//   UserAvatar(this.userAvatarUrl);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 32,
-//       height: 34,
-//       decoration: BoxDecoration(
-//         image: DecorationImage(
-//             image: Image.network(this.userAvatarUrl).image,
-//             fit: BoxFit.cover,
-//             repeat: ImageRepeat.noRepeat),
-//         shape: BoxShape.circle,
-//       ),
-//     );
-//   }
-// }
+
 
 class NotificationList extends StatefulWidget {
   var notificationData;
@@ -219,6 +247,7 @@ final List<String> imgList = [
 ];
 
 class ClassCarousel extends StatefulWidget {
+  
   _ClassCarouselState createState() => _ClassCarouselState();
 }
 
@@ -238,7 +267,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
     return Column(
       children: <Widget>[
         CarouselSlider(
-          height: 160,
+          height: MediaQuery.of(context).size.height * 0.25,
          
           items: imgList.map((i) {
             return Builder(
@@ -246,10 +275,9 @@ class _ClassCarouselState extends State<ClassCarousel> {
                 return Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-
-                    //mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Container(
+                        margin: EdgeInsets.all(5),
                         width: 105,
                         height: 105,
                         decoration: BoxDecoration(

@@ -58,10 +58,10 @@ class _SignInState extends State<SignIn> {
           padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 32),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6.0),
-            color: Colors.white,
+            color: Theme.of(context).backgroundColor,
             boxShadow: [
               BoxShadow(
-                  color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
+                  color: Colors.grey[600], offset: Offset(0, 1), blurRadius: 3),
             ],
           ),
           child: SignInForm(
@@ -153,7 +153,7 @@ class _SignInFormState extends State<SignInForm> {
             child: TextFormField(
               decoration: InputDecoration(
                 labelText: "Email",
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).backgroundColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
                 ),
@@ -177,7 +177,7 @@ class _SignInFormState extends State<SignInForm> {
               decoration: InputDecoration(
                 errorMaxLines: 2,
                 labelText: "Password",
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).backgroundColor,
                 focusColor: Theme.of(context).hoverColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
