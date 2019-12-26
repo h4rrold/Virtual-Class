@@ -56,7 +56,7 @@ class UserClassItem extends StatelessWidget {
                       offset: Offset(0, 1),
                       blurRadius: 3),
                 ],
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
               ),
               child: Column(
                 children: <Widget>[
@@ -95,11 +95,11 @@ class UserClassItem extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.grey[400],
+                      color: Colors.grey[600],
                       offset: Offset(0, 1),
                       blurRadius: 3),
                 ],
-                color: Colors.white,
+                color: Theme.of(context).backgroundColor,
               ),
               child: Stack(
                 children: <Widget>[

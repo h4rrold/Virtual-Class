@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     await Provider.of<AppSettingsModel>(context, listen: false).getSavedTheme();
     //await Provider.of<Authorization>(context, listen: false).deletetoken();
     //await Provider.of<Authorization>(context, listen: false).setusertoken('qwerty');
+    
     if (await Provider.of<Authorization>(context, listen: false).check())
       body = MyStartPage(
         title: 'Home',

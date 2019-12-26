@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 class HttpService {
   final String postsURL = "https://jsonplaceholder.typicode.com/posts";
-
   Future<dynamic> getrequest(String uri) async {
     http.Response response = await http.get(uri);
     if (response.statusCode == 200) {

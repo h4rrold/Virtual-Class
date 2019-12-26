@@ -45,7 +45,7 @@ class _MyStartPageState extends State<MyStartPage> {
                     child: Center(
                       child: Text(
                         'Recent notifications',
-                        style: TextStyle(fontSize: 22),
+                        style: Theme.of(context).textTheme.body1.copyWith(fontSize: 22),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -167,7 +167,7 @@ class NotificationExcerpt extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
-      ], color: Colors.white),
+      ], color: Theme.of(context).backgroundColor),
       padding: EdgeInsets.all(12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,7 +259,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
                                 offset: Offset(0, 1),
                                 blurRadius: 3),
                           ],
-                          color: Colors.white,
+                          color: Theme.of(context).backgroundColor,
                           image: DecorationImage(
                               image: Image.network(i).image,
                               fit: BoxFit.contain,
@@ -310,7 +310,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
                   shape: BoxShape.circle,
                   color: _current == index
                       ? Theme.of(context).hoverColor
-                      : Colors.white),
+                      : Theme.of(context).backgroundColor),
             );
           }),
         )
