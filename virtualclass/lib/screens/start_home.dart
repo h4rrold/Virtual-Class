@@ -111,7 +111,7 @@ class _MyStartPageState extends State<MyStartPage> {
                                               .body1
                                               .copyWith(fontSize: 21)),
                                     ),
-                                    ClassCarousel()
+                                    ClassCarousel(this._homeClassData)
                                   ],
                                 ),
                               )
@@ -123,7 +123,6 @@ class _MyStartPageState extends State<MyStartPage> {
                   ),
                 );
             }
-            ;
           }),
       onRefresh: getclasses,
     );
@@ -190,7 +189,7 @@ class NotificationExcerpt extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(boxShadow: [
-        BoxShadow(color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
+        BoxShadow(color: Colors.grey[600], offset: Offset(0, 1), blurRadius: 3),
       ], color: Theme.of(context).backgroundColor),
       padding: EdgeInsets.all(12),
       child: Row(
@@ -243,6 +242,8 @@ final List<String> imgList = [
 ];
 
 class ClassCarousel extends StatefulWidget {
+  List<dynamic> carouselData;
+  ClassCarousel(this.carouselData);
   _ClassCarouselState createState() => _ClassCarouselState();
 }
 
@@ -263,7 +264,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
       children: <Widget>[
         CarouselSlider(
           height: MediaQuery.of(context).size.height * 0.25,
-          items: imgList.map((i) {
+          items: widget.carouselData.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -277,13 +278,13 @@ class _ClassCarouselState extends State<ClassCarousel> {
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.grey[400],
+                                color: Colors.grey[600],
                                 offset: Offset(0, 1),
                                 blurRadius: 3),
                           ],
                           color: Theme.of(context).backgroundColor,
                           image: DecorationImage(
-                              image: Image.network(i).image,
+                              image: Image.network(i['image']).image,
                               fit: BoxFit.contain,
                               repeat: ImageRepeat.noRepeat),
                           shape: BoxShape.circle,
@@ -293,7 +294,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
                         padding: EdgeInsets.only(top: 20),
                         child: Column(
                           children: <Widget>[
-                            Text('Flutter class',
+                            Text(i['name'],
                                 style: Theme.of(context)
                                     .textTheme
                                     .body1
@@ -317,7 +318,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: map(imgList, (index, url) {
+          children: map(widget.carouselData, (index, url) {
             return Container(
               width: 8.0,
               height: 8.0,
@@ -325,7 +326,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey[400],
+                        color: Colors.grey[600],
                         offset: Offset(0, 1),
                         blurRadius: 3),
                   ],
