@@ -24,8 +24,6 @@ class Authorization extends ChangeNotifier {
     if (signedin)
       return true;
     else {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.remove('signedin');
       return false;
     }
   }
@@ -33,8 +31,11 @@ class Authorization extends ChangeNotifier {
   Future<dynamic> signin(
       {@required String email, @required String password}) async {
     Future.delayed(Duration(seconds: 1));
-    return await HttpService.postrequest('login',
+
+    var response =await HttpService.postrequest('login',
         body: '{"email": "$email", "password": "$password"}');
+        print(response);
+    return response;
   }
 
   void deletetoken() async {

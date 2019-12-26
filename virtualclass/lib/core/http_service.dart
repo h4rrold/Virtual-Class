@@ -31,6 +31,7 @@ class HttpService {
     } else {
       print('Failed to load');
       print(response.statusCode);
+      return response.statusCode;
       //throw Exception('Failed to load');
     }
   }
