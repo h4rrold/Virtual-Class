@@ -4,13 +4,19 @@ import 'package:http/http.dart' as http;
 
 class HttpService {
   static String domen = 'http://virtualclassvav.herokuapp.com/public/api/';
+  static String token;
 
-  static Future<dynamic> getrequest(String uri) async {
-    http.Response response = await http.get(domen + uri);
+  static void settoken(String t){token = t;}
+
+  static Future<List<dynamic>> getrequest(String uri) async {
+    http.Response response = await http.get(domen + uri, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
+    print(response.body);
     if (response.statusCode == 200) {
+      print(response.body);
+      print(json.decode(response.body));
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to load');
+      print('Failed to load');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/screens/signin.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import 'main_screen.dart';
@@ -15,6 +16,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => AppSettingsModel()),
       ChangeNotifierProvider(create: (context) => Navigation()),
       ChangeNotifierProvider(create: (context) => Authorization()),
+      ChangeNotifierProvider(create: (context) => ClassesModel()),
     ],
     child: MyApp(),
   ));

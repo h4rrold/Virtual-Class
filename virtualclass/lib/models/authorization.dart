@@ -4,10 +4,6 @@ import 'package:virtualclass/core/http_service.dart';
 
 class Authorization extends ChangeNotifier {
   bool signedin;
-  
-
-
-
 
   Future<String> getusertoken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -24,20 +20,21 @@ class Authorization extends ChangeNotifier {
   }
 
   Future<bool> check() async {
-    await getusertoken();
-    if (signedin) {
-      if (await HttpService.getStatus() == 200)
-        return true;
-      else
-        deletetoken();
-        return false;
-    } else
+    HttpService.settoken(await getusertoken());
+    if (signedin)
+      return true;
+    else {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.remove('signedin');
       return false;
+    }
   }
 
-  Future<dynamic> signin({@required String email, @required String password})async{
+  Future<dynamic> signin(
+      {@required String email, @required String password}) async {
     Future.delayed(Duration(seconds: 1));
-      return await HttpService.postrequest('login', body: '{"email": "$email", "password": "$password"}');
+    return await HttpService.postrequest('login',
+        body: '{"email": "$email", "password": "$password"}');
   }
 
   void deletetoken() async {

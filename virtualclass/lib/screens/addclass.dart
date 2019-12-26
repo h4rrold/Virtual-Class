@@ -85,16 +85,7 @@ class _ClassCreateFormState extends State<ClassCreateForm>{
                 
               ),
             ),     
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: RaisedButton(
-               child:
-                 Text( 'Select class image')
-               
-               
-              )
-
-            ),
+           
            
             OutlineButton(
               onPressed: () => (this._formKey.currentState.validate()),

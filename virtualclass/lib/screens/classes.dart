@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:virtualclass/main_screen.dart';
+import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/screens/addclass.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
@@ -8,73 +12,86 @@ class MyClasses extends StatefulWidget {
 }
 
 class _MyClassesState extends State<MyClasses> {
-  List<Map<String, dynamic>> _userClassesData = [
-    {
-      'id': 1,
-      'className': 'Flutter class',
-      'classImage':
-          'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-      'classOwnerName': 'Sergiy Tytenko',
-    },
-    {
-      'id': 2,
-      'className': 'Flutter class',
-      'classImage':
-          'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-      'classOwnerName': 'Sergiy Tytenko',
-    },
-    {
-      'id': 3,
-      'className': 'Flutter class',
-      'classImage':
-          'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-      'classOwnerName': 'Sergiy Tytenko',
-    },
-    {
-      'id': 4,
-      'className': 'Flutter class',
-      'classImage':
-          'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-      'classOwnerName': 'Sergiy Tytenko',
-    },
-    {
-      'id': 5,
-      'className': 'Flutter class',
-      'classImage':
-          'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-      'classOwnerName': 'Sergiy Tytenko',
-    }
-  ];
+  Future<void> getclasses() async {
+    _userClassesData =
+        await Provider.of<ClassesModel>(context, listen: false).getclasses();
+  }
+
+  List<dynamic> _userClassesData;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: getappbar('My classes'),
-      body: Padding(
-        padding: EdgeInsets.only(top: 8.0),
-        child: StaggeredGridView.countBuilder(
-          crossAxisCount: 2,
-          itemCount: _userClassesData.length,
-          itemBuilder: (context, int index) => UserClassItem(
-              _userClassesData[index]['id'],
-              _userClassesData[index]['className'],
-              _userClassesData[index]['classOwnerName'],
-              _userClassesData[index]['classImage'],
-              index),
-          staggeredTileBuilder: (int index) =>
-              StaggeredTile.count(index % 3 != 0 ? 1 : 2, 1),
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 10.0,
-        )),
-        floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {return ClassCreatePage();}));
-      },
-      child: Icon(Icons.add),
-      backgroundColor: Theme.of(context).hoverColor,
-    ));
-       
+    return RefreshIndicator(
+      child: FutureBuilder(
+          future: getclasses(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+
+              ///when the future is null
+              case ConnectionState.none:
+                return Text(
+                  'null',
+                  textAlign: TextAlign.center,
+                );
+
+              case ConnectionState.active:
+
+              ///when data is being fetched
+              case ConnectionState.waiting:
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                      child: SpinKitFadingCube(
+                    size: 100,
+                    color: Colors.blue,
+                  )),
+                );
+
+              case ConnectionState.done:
+
+                ///task is complete with an error (eg. When you
+                ///are offline)
+                if (snapshot.hasError)
+                  return Text(
+                    'Error:\n\n${snapshot.error}',
+                    textAlign: TextAlign.center,
+                  );
+
+                ///task is complete with some data
+                return Scaffold(
+                    appBar: getappbar('My classes'),
+                    body: Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: StaggeredGridView.countBuilder(
+                          crossAxisCount: 2,
+                          itemCount: _userClassesData.length,
+                          itemBuilder: (context, int index) => UserClassItem(
+                              _userClassesData[index]['id'],
+                              _userClassesData[index]['name'],
+                              _userClassesData[index]['owner']['name'],
+                              _userClassesData[index]['image'],
+                              index),
+                          staggeredTileBuilder: (int index) =>
+                              StaggeredTile.count(index % 3 != 0 ? 1 : 2, 1),
+                          mainAxisSpacing: 8.0,
+                          crossAxisSpacing: 10.0,
+                        )),
+                    floatingActionButton: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return ClassCreatePage();
+                        }));
+                      },
+                      child: Icon(Icons.add),
+                      backgroundColor: Theme.of(context).hoverColor,
+                    ));
+            }
+            ;
+          }),
+      onRefresh: getclasses,
+    );
   }
 }
 
@@ -89,8 +106,11 @@ class UserClassItem extends StatelessWidget {
   @override
   // Depending on index this widget will build differently
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => {},
+    return InkWell(
+      onTap: () => {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MainScreen()))
+      },
       child: (this._itemIndex % 3 != 0)
           ? Container(
               decoration: BoxDecoration(
