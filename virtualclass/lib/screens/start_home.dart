@@ -1,6 +1,3 @@
-
-
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -8,8 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import '../models/navigation_model.dart';
-
-
 
 class MyStartPage extends StatefulWidget {
   MyStartPage({Key key, this.title}) : super(key: key);
@@ -20,17 +15,15 @@ class MyStartPage extends StatefulWidget {
 }
 
 class _MyStartPageState extends State<MyStartPage> {
-  int _counter = 0;
-  List <dynamic> _homeClassData;
- Future<void> getclasses() async {
-    _homeClassData =
-        await Provider.of<ClassesModel>(context, listen: false).getSomeclasses();
+  List<dynamic> _homeClassData;
+  Future<void> getclasses() async {
+    _homeClassData = await Provider.of<ClassesModel>(context, listen: false)
+        .getSomeclasses();
   }
-  
 
   @override
   Widget build(BuildContext context) {
-     Provider.of<Navigation>(context).setContext(context);
+    Provider.of<Navigation>(context).setContext(context);
     // TODO: implement build
     return RefreshIndicator(
       child: FutureBuilder(
@@ -50,7 +43,7 @@ class _MyStartPageState extends State<MyStartPage> {
               ///when data is being fetched
               case ConnectionState.waiting:
                 return Container(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                   child: Center(
                       child: SpinKitFadingCube(
                     size: 100,
@@ -69,61 +62,66 @@ class _MyStartPageState extends State<MyStartPage> {
                   );
 
                 ///task is complete with some data
-                 return Scaffold(
-        appBar: getappbar('Home'),
-        drawer: AppDrawer(),
-        body: Container(
-    padding: EdgeInsets.only(top: 22, right: 16, left: 16, bottom: 24),
-    child: Column(
-      children: <Widget>[
-        Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: Center(
-                  child: Text(
-                    'Recent notifications',
-                    style: Theme.of(context).textTheme.body1.copyWith(fontSize: 22),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              NotificationList(),
-              Padding(
-                padding: EdgeInsets.only(top: 4),
-                child: Center(
-                  child: InkWell(
-                    onTap: () => {},
-                    child: Text('View more notifications',
-                        style: Theme.of(context).textTheme.button),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 25),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 12),
-                      child: Text('Your classes',
-                          style: Theme.of(context)
-                              .textTheme
-                              .body1
-                              .copyWith(fontSize: 21)),
+                return Scaffold(
+                  appBar: getappbar('Home'),
+                  drawer: AppDrawer(),
+                  body: Container(
+                    padding: EdgeInsets.only(
+                        top: 22, right: 16, left: 16, bottom: 24),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 16),
+                                child: Center(
+                                  child: Text(
+                                    'Recent notifications',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .body1
+                                        .copyWith(fontSize: 22),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              NotificationList(),
+                              Padding(
+                                padding: EdgeInsets.only(top: 4),
+                                child: Center(
+                                  child: InkWell(
+                                    onTap: () => {},
+                                    child: Text('View more notifications',
+                                        style:
+                                            Theme.of(context).textTheme.button),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 25),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 12),
+                                      child: Text('Your classes',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .body1
+                                              .copyWith(fontSize: 21)),
+                                    ),
+                                    ClassCarousel()
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    ClassCarousel()
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
-      ],
-    ),
-        ),
-      );
+                  ),
+                );
             }
             ;
           }),
@@ -131,8 +129,6 @@ class _MyStartPageState extends State<MyStartPage> {
     );
   }
 }
-
-
 
 class NotificationList extends StatefulWidget {
   var notificationData;
@@ -247,7 +243,6 @@ final List<String> imgList = [
 ];
 
 class ClassCarousel extends StatefulWidget {
-  
   _ClassCarouselState createState() => _ClassCarouselState();
 }
 
@@ -268,7 +263,6 @@ class _ClassCarouselState extends State<ClassCarousel> {
       children: <Widget>[
         CarouselSlider(
           height: MediaQuery.of(context).size.height * 0.25,
-         
           items: imgList.map((i) {
             return Builder(
               builder: (BuildContext context) {
@@ -346,4 +340,3 @@ class _ClassCarouselState extends State<ClassCarousel> {
     );
   }
 }
-

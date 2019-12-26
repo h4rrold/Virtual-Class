@@ -40,7 +40,7 @@ class _MyClassesState extends State<MyClasses> {
               ///when data is being fetched
               case ConnectionState.waiting:
                 return Container(
-                  color: Colors.white,
+                  color: Theme.of(context).backgroundColor,
                   child: Center(
                       child: SpinKitFadingCube(
                     size: 100,
