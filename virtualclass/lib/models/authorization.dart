@@ -29,7 +29,7 @@ class Authorization extends ChangeNotifier {
   }
 
   Future<dynamic> signin(
-      {@required String email, @required String password}) async {
+      { String email,  String password}) async {
     Future.delayed(Duration(seconds: 1));
 
     var response =await HttpService.postrequest('login',

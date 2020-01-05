@@ -22,4 +22,11 @@ class ClassesModel extends ChangeNotifier {
         print(response);
     return response;
   }
+
+  Future<dynamic> deleteClass(int id)async{
+  
+    var response = await HttpService.postrequest('$id');
+        print(response);
+    return response;
+  }
 }

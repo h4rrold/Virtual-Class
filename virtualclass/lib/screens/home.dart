@@ -2,12 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:virtualclass/core/http_service.dart';
 import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/models/posts_model.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../models/navigation_model.dart';
 
 class ClassFeedPage extends StatefulWidget {
   int classId;

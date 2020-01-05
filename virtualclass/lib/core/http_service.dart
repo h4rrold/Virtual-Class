@@ -46,13 +46,14 @@ class HttpService {
     }
   }
 
-   static Future<void> deletePost(String uri,{Map<String, String> headers}) async {
-    http.Response response = await http.delete(domen + uri);
+   static Future<void> delete(String uri,{Map<String, String> headers}) async {
+    http.Response response = await http.delete(domen + 'delete/' + uri, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
 
   if (response.statusCode == 200) {
     print("DELETED");
   } else {
-    throw "Can't delete.";
+    print('Failed to delete');
+    return response.statusCode;
   }
 }
 
