@@ -26,45 +26,45 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      child: FutureBuilder(
-        future: getPosts(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
+    return FutureBuilder(
+      future: getPosts(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
 
-            ///when the future is null
-            case ConnectionState.none:
+          ///when the future is null
+          case ConnectionState.none:
+            return Text(
+              'null',
+              textAlign: TextAlign.center,
+            );
+
+          case ConnectionState.active:
+
+          ///when data is being fetched
+          case ConnectionState.waiting:
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              child: Center(
+                  child: SpinKitFadingCube(
+                size: 100,
+                color: Colors.blue,
+              )),
+            );
+
+          case ConnectionState.done:
+
+            ///task is complete with an error (eg. When you
+            ///are offline)
+            if (snapshot.hasError)
               return Text(
-                'null',
+                'Error:\n\n${snapshot.error}',
                 textAlign: TextAlign.center,
               );
 
-            case ConnectionState.active:
-
-            ///when data is being fetched
-            case ConnectionState.waiting:
-              return Container(
-                color: Theme.of(context).backgroundColor,
-                child: Center(
-                    child: SpinKitFadingCube(
-                  size: 100,
-                  color: Colors.blue,
-                )),
-              );
-
-            case ConnectionState.done:
-
-              ///task is complete with an error (eg. When you
-              ///are offline)
-              if (snapshot.hasError)
-                return Text(
-                  'Error:\n\n${snapshot.error}',
-                  textAlign: TextAlign.center,
-                );
-
-              ///task is complete with some data
-              return Scaffold(
-                  body: ListView.builder(
+            ///task is complete with some data
+            return Scaffold(
+                body: RefreshIndicator(
+                                  child: ListView.builder(
                       //controller: _scrollController,
                       padding:
                           EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
@@ -93,16 +93,15 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                               _array[i]['content'],
                               Random().nextInt(30),
                             ));
-                      }),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () {},
-                    child: Icon(Icons.add),
-                    backgroundColor: Theme.of(context).hoverColor,
-                  ));
-          }
-        },
-      ),
-      onRefresh: getPosts,
+                      }), onRefresh: getPosts,
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {},
+                  child: Icon(Icons.add),
+                  backgroundColor: Theme.of(context).hoverColor,
+                ));
+        }
+      },
     );
   }
 }

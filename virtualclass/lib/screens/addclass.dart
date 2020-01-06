@@ -93,12 +93,6 @@ class _ClassCreateFormState extends State<ClassCreateForm> {
               OutlineButton(
                 onPressed: () async {
                   if (this._formKey.currentState.validate()) {
-                    // setState(() {
-                    //   loading = true;
-                    //   Provider.of<ClassesModel>(context, listen: false).addclass(name, bio).then((response){
-                    //     // if(response != 400) Navigator.pop(context);
-                    //   });
-                    // });
                     setState(() {
                       loading = true;
                     });
