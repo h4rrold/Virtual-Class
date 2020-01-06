@@ -20,24 +20,16 @@ class _SignInState extends State<SignIn> {
       Provider.of<Authorization>(context, listen: false)
           .signin(email: email, password: password)
           .then((response) {
-
-             if (response == 401) {
-               setState(() {
-                loading = false;
-               });
-              
-          } else {
-            HttpService.settoken(response['access_token']);
-            Provider.of<Authorization>(context, listen: false)
-                .setusertoken(response['access_token']);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => MyStartPage()));
-                
-          }
-        
-          
-         
-        
+        if (response == 401) {
+          setState(() {
+            loading = false;
+          });
+        } else {
+          Provider.of<Authorization>(context, listen: false)
+              .setusertoken(response['access_token']);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MyStartPage()));
+        }
       });
     });
   }

@@ -28,14 +28,28 @@ class Authorization extends ChangeNotifier {
     }
   }
 
-  Future<dynamic> signin(
-      { String email,  String password}) async {
+  Future<dynamic> signin({String email, String password}) async {
     Future.delayed(Duration(seconds: 1));
 
-    var response =await HttpService.postrequest('login',
+    var response = await HttpService.postrequest('login',
         body: '{"email": "$email", "password": "$password"}');
-        print(response);
-    this.user = await HttpService.getrequest('user');
+    if (response == 200) {
+      HttpService.settoken(response['access_token']);
+      this.user = await HttpService.getrequest('user');
+      print(user);
+    }
+    return response;
+  }
+
+  Future<dynamic> signup({String name, String email, String password}) async {
+    Future.delayed(Duration(seconds: 1));
+
+    var response = await HttpService.postrequest('register',
+        body: '{"name": "$name", "email": "$email", "password": "$password"}');
+    if (response == 200) {
+      HttpService.settoken(response['access_token']);
+      this.user = await HttpService.getrequest('user');
+    }
     return response;
   }
 

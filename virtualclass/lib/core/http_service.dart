@@ -8,29 +8,29 @@ class HttpService {
 
   static void settoken(String t){token = t;}
 
-  static Future<List<dynamic>> getrequest(String uri) async {
+  static Future<dynamic> getrequest(String uri) async {
+    print(domen+uri);
     http.Response response = await http.get(domen + uri, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
-    print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.body);
       print(json.decode(response.body));
       return json.decode(response.body);
     } else {
-      print('Failed to load');
+      print('Failed to load: ' + uri);
     }
   }
 
    static Future<dynamic> postrequest(String uri,{Map<String, String> headers, dynamic body, Encoding encoding}) async {
-     print(body);
+     //print(body);
+     print('token ' + token.toString());
      print(domen+uri);
 
     http.Response response = await http.post(domen + uri, body: body, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
+          print(response.statusCode);
     if (response.statusCode == 200) {
-      print(response.statusCode);
       return json.decode(response.body);
     } else {
-      print('Failed to load');
-      print(response.statusCode);
+      print('Failed to load: ' + uri);
       return response.statusCode;
       //throw Exception('Failed to load');
     }
@@ -41,7 +41,7 @@ class HttpService {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      print('Failed to load');
+      print('Failed to load: ' + uri);
       //throw Exception('Failed to load');
     }
   }
@@ -52,7 +52,7 @@ class HttpService {
   if (response.statusCode == 200) {
     print("DELETED");
   } else {
-    print('Failed to delete');
+    print('Failed to delete: ' + uri);
     return response.statusCode;
   }
 }
