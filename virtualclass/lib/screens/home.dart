@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/models/posts_model.dart';
+import 'package:virtualclass/screens/postAdd.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
 class ClassFeedPage extends StatefulWidget {
@@ -96,7 +97,12 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                       }), onRefresh: getPosts,
                 ),
                 floatingActionButton: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return ClassAddPostPage(widget.classId);
+                        }));
+                  },
                   child: Icon(Icons.add),
                   backgroundColor: Theme.of(context).hoverColor,
                 ));
