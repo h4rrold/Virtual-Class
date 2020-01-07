@@ -66,7 +66,7 @@ class _MyStartPageState extends State<MyStartPage> {
                 ///task is complete with some data
                 return Scaffold(
                   appBar: getappbar(context,'Home'),
-                  drawer: AppDrawer(),
+                  drawer: AppDrawer(context),
                   body: Container(
                     padding: EdgeInsets.only(
                         top: 22, right: 16, left: 16, bottom: 24),

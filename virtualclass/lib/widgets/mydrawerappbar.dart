@@ -6,6 +6,10 @@ import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/myProfile.dart';
 
 class AppDrawer extends StatelessWidget {
+final BuildContext context;
+
+  const AppDrawer( this.context,{Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -86,7 +90,7 @@ class AppDrawer extends StatelessWidget {
           Positioned(
               bottom: 12.0,
               left: 16.0,
-              child: Text("Vitaliy Furman",
+              child: Text(Provider.of<User>(context, listen: false).user['name'],
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -133,7 +137,7 @@ Widget getappbar(context,String title){
                     }))
                       },
                       child: UserAvatar(
-                          'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
+                          Provider.of<User>(context, listen: false).user['avatar']))))
         ],
       );
 }
