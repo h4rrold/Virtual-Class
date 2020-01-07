@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:virtualclass/models/posts_model.dart';
-import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 class ClassAddPostPage extends StatelessWidget{
@@ -17,11 +15,8 @@ class ClassAddPostPage extends StatelessWidget{
         children:[
           Center(child: Text('Add post in Flutter Class',style: Theme.of(context).textTheme.body1.copyWith(fontSize: 18))),
           Container(
-            child: Column(
-              children: <Widget>[
-                AddPostForm(this.classId)
-              ],
-            ),
+            height: 500,
+            child: AddPostForm(this.classId),
           )
 
         ]
@@ -37,6 +32,8 @@ class AddPostForm extends StatefulWidget{
   _AddPostFormState createState() => _AddPostFormState();
 }
 class _AddPostFormState extends State<AddPostForm>{
+
+
   bool loading = false;
   String postTitle;
   String postText;
