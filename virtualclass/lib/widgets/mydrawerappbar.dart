@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/models/navigation_model.dart';
+import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/myProfile.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -51,6 +52,7 @@ class AppDrawer extends StatelessWidget {
                           FlatButton(
                             child: new Text("Yes"),
                             onPressed: () {
+                              Provider.of<User>(context, listen: false).clearuser();
                               Provider.of<Authorization>(context).deletetoken();
                             },
                           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/model_app_settings.dart';
 import 'package:virtualclass/models/navigation_model.dart';
+import 'package:virtualclass/models/user_model.dart';
 
 
 class MyProfile extends StatefulWidget {
@@ -37,10 +38,11 @@ class MyProfile extends StatefulWidget {
                   child: IconButton(
                     icon: Icon(Icons.notifications),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/notifications');
+                      print(Provider.of<User>(context, listen: false).user);
                     },
                   ),
-                )
+                ),
+                Text(Provider.of<User>(context, listen: false).user.toString())
                 ],
               )
 

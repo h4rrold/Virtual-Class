@@ -32,21 +32,20 @@ class MyApp extends StatelessWidget {
     await Provider.of<AppSettingsModel>(context, listen: false).getSavedTheme();
     //await Provider.of<Authorization>(context, listen: false).deletetoken();
     //await Provider.of<Authorization>(context, listen: false).setusertoken('qwerty');
-    
-    if (await Provider.of<Authorization>(context, listen: false).check())
+
+    if (await Provider.of<Authorization>(context, listen: false).check()) {
+      await Provider.of<User>(context, listen: false).getuser();
       body = MyStartPage(
         title: 'Home',
       );
-    else
+    } else
       body = SignIn();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown
-      ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return Consumer<Authorization>(builder: (context, model, _child) {
       //print('тема ' + model.getTheme.toString());
       return FutureBuilder(

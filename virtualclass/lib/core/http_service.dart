@@ -18,6 +18,7 @@ class HttpService {
       return json.decode(response.body);
     } else {
       print('Failed to load: ' + uri);
+      return response.statusCode;
     }
   }
 
@@ -38,7 +39,7 @@ class HttpService {
   }
 
    static Future<dynamic> putrequest(String uri,{Map<String, String> headers, dynamic body, Encoding encoding}) async {
-    http.Response response = await http.put(domen + uri, body: json,encoding: encoding??null);
+    http.Response response = await http.put(domen + uri, body: body, );
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

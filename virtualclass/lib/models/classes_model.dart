@@ -5,12 +5,12 @@ class ClassesModel extends ChangeNotifier {
   List<dynamic> userClassesData;
   int currentClassId;
 
-  Future<List<dynamic>> getclasses() async {
+  Future<dynamic> getclasses() async {
     userClassesData = await HttpService.getrequest('classes');
     return userClassesData;
   }
 
-  Future<List> getSomeclasses() async {
+  Future<dynamic> getSomeclasses() async {
     userClassesData = await HttpService.getrequest('classes?amount=5');
     return userClassesData;
   }
