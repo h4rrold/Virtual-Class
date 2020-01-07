@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/models/navigation_model.dart';
+import 'package:virtualclass/screens/myProfile.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -108,7 +109,7 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-Widget getappbar(String title){
+Widget getappbar(context,String title){
    return AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -123,7 +124,12 @@ Widget getappbar(String title){
               padding: EdgeInsets.only(right: 16, left: 28),
               child: Center(
                   child: GestureDetector(
-                      onTap: () => {},
+                      onTap: () => {
+                       Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return MyProfile();
+                    }))
+                      },
                       child: UserAvatar(
                           'https://image.freepik.com/free-photo/_8353-6394.jpg'))))
         ],

@@ -88,7 +88,7 @@ class MainScreenState extends State<MainScreen> {
       child: Scaffold(
         drawerEdgeDragWidth: 0,
         drawer: AppDrawer(),
-      appBar: getappbar('Virtual Class'),
+      appBar: getappbar(context,'Virtual Class'),
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.home),
           _buildOffstageNavigator(TabItem.settings),

@@ -18,7 +18,7 @@ class MyProfile1 extends StatefulWidget {
   Widget build(BuildContext context) {
     
     return  Scaffold(
-            appBar: getappbar('Chat'),
+            appBar: getappbar(context,'Chat'),
        // backgroundColor: MyTheme.myTheme['screen'],
         
       

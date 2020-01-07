@@ -8,7 +8,7 @@ class ClassCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getappbar('Create'),
+        appBar: getappbar(context,'Create'),
         body: SingleChildScrollView(
           padding:
               EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0, bottom: 14),
