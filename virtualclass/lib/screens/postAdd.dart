@@ -3,7 +3,7 @@ import 'package:virtualclass/models/posts_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 class ClassAddPostPage extends StatelessWidget{
-  int classId;
+  final int classId;
   ClassAddPostPage(this.classId);
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,15 @@ class ClassAddPostPage extends StatelessWidget{
 
         ]
       ),
-    )
+      
+    ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios),
+          backgroundColor: Theme.of(context).hoverColor,
+        )
     );
   }
 
