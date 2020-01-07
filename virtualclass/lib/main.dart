@@ -9,6 +9,7 @@ import 'models/authorization.dart';
 import 'models/model_app_settings.dart';
 import 'models/navigation_model.dart';
 import 'models/posts_model.dart';
+import 'models/user_model.dart';
 import 'screens/start_home.dart';
 
 void main() {
@@ -19,6 +20,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => Authorization()),
       ChangeNotifierProvider(create: (context) => ClassesModel()),
       ChangeNotifierProvider(create: (context) => PostsModel()),
+      ChangeNotifierProvider(create: (context) => User()),
     ],
     child: MyApp(),
   ));
@@ -151,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getappbar(context,widget.title),
+      appBar: getappbar(context, widget.title),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

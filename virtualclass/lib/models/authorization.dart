@@ -38,7 +38,6 @@ class Authorization extends ChangeNotifier {
         body: '{"email": "$email", "password": "$password"}');
     if (response != 401) {
       HttpService.settoken(response['access_token']);
-      this.user = await HttpService.getrequest('user');
     }
     return response;
   }
@@ -50,7 +49,6 @@ class Authorization extends ChangeNotifier {
         body: '{"name": "$name", "email": "$email", "password": "$password"}');
     if (response == 200) {
       HttpService.settoken(response['access_token']);
-      this.user = await HttpService.getrequest('user');
     }
     return response;
   }

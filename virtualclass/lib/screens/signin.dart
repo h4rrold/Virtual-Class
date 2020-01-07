@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:virtualclass/core/http_service.dart';
 import 'package:virtualclass/models/authorization.dart';
+import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/signup.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:virtualclass/screens/start_home.dart';
@@ -28,6 +30,7 @@ class _SignInState extends State<SignIn> {
       } else {
         await Provider.of<Authorization>(context, listen: false)
             .setusertoken(response['access_token']);
+              Provider.of<User>(context, listen: false).user = await HttpService.getrequest('user');
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MyStartPage()));
       }
