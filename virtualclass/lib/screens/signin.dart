@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:virtualclass/core/http_service.dart';
 import 'package:virtualclass/models/authorization.dart';
 import 'package:virtualclass/screens/signup.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,25 +12,26 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool loading;
+   bool error = false;
 
-  void load(String email, String password) {
+  void load(String email, String password) async{
     setState(() {
       loading = true;
-      Provider.of<Authorization>(context, listen: false)
-          .signin(email: email, password: password)
-          .then((response) {
-        if (response == 401) {
-          setState(() {
-            loading = false;
-          });
-        } else {
-          Provider.of<Authorization>(context, listen: false)
-              .setusertoken(response['access_token']);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MyStartPage()));
-        }
-      });
-    });
+       });
+      var response = await Provider.of<Authorization>(context, listen: false)
+          .signin(email: email, password: password);
+      if (response == 401) {
+        setState(() {
+          error = true;
+          loading = false;
+        });
+      } else {
+        await Provider.of<Authorization>(context, listen: false)
+            .setusertoken(response['access_token']);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyStartPage()));
+      }
+   
   }
 
   List<Widget> getContent() {
@@ -58,6 +58,7 @@ class _SignInState extends State<SignIn> {
           ),
           child: SignInForm(
             refresh: load,
+            error: error
           ),
         ),
         Padding(
@@ -117,11 +118,12 @@ class _SignInState extends State<SignIn> {
 }
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({Key key, this.refresh}) : super(key: key);
+  const SignInForm({Key key, this.refresh, this.error}) : super(key: key);
 
   _SignInFormState createState() => _SignInFormState();
 
   final Function refresh;
+  final bool error;
 }
 
 class _SignInFormState extends State<SignInForm> {
@@ -203,7 +205,16 @@ class _SignInFormState extends State<SignInForm> {
             child: Text('SIGN IN',
                 style:
                     Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
-          )
+          ),
+          widget.error == false
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Text(
+                    'The user credentials were incorrect',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                )
         ],
       ),
     );

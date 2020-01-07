@@ -5,22 +5,25 @@ import 'package:virtualclass/core/http_service.dart';
 class Authorization extends ChangeNotifier {
   bool signedin;
   var user;
+  String tok;
 
   Future<String> getusertoken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    print(pref.getString('signedin'));
+    print('token ' + pref.getString('signedin').toString());
     signedin = (pref.getString('signedin') == null) ? false : true;
+    if(signedin) tok = pref.getString('signedin');
 
     return pref.getString('signedin');
   }
 
-  void setusertoken(String usertoken) async {
+  Future<void> setusertoken(String usertoken) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('signedin', usertoken);
   }
 
   Future<bool> check() async {
     HttpService.settoken(await getusertoken());
+    print('http_token ' + HttpService.token.toString());
     if (signedin)
       return true;
     else {
@@ -33,10 +36,9 @@ class Authorization extends ChangeNotifier {
 
     var response = await HttpService.postrequest('login',
         body: '{"email": "$email", "password": "$password"}');
-    if (response == 200) {
+    if (response != 401) {
       HttpService.settoken(response['access_token']);
       this.user = await HttpService.getrequest('user');
-      print(user);
     }
     return response;
   }

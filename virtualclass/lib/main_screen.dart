@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:virtualclass/screens/myprofile%20copy.dart';
+import 'package:virtualclass/screens/classChat.dart';
 import 'package:virtualclass/widgets/bottom_navigation_bar.dart';
 import 'package:virtualclass/core/tab_navigator.dart';
 import 'package:flutter/material.dart';

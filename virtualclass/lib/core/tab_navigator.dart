@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/navigation_model.dart';
+import 'package:virtualclass/screens/classSettings.dart';
 import 'package:virtualclass/screens/home.dart';
-import 'package:virtualclass/screens/myprofile.dart';
 import 'package:virtualclass/screens/notifications.dart';
 import 'package:virtualclass/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';

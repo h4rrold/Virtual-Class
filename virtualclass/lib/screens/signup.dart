@@ -12,25 +12,26 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool loading;
+  bool error = false;
 
-  void load(String name, String email, String password) {
+  void load(String name, String email, String password) async {
     setState(() {
       loading = true;
-      Provider.of<Authorization>(context, listen: false)
-          .signup(email: email, password: password)
-          .then((response) {
-        if (response is int) {
-          setState(() {
-            loading = false;
-          });
-        } else {
-          Provider.of<Authorization>(context, listen: false)
-              .setusertoken(response['access_token']);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MyStartPage()));
-        }
-      });
     });
+    var response = await Provider.of<Authorization>(context, listen: false)
+        .signup(name: name, email: email, password: password);
+
+    if (response is int) {
+      setState(() {
+        error = true;
+        loading = false;
+      });
+    } else {
+      await Provider.of<Authorization>(context, listen: false)
+          .setusertoken(response['access_token']);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MyStartPage()));
+    }
   }
 
   List<Widget> getContent() {
@@ -57,6 +58,7 @@ class _SignUpState extends State<SignUp> {
           ),
           child: SignUpForm(
             refresh: load,
+            error: error,
           ),
         ),
         Padding(
@@ -119,8 +121,9 @@ class _SignUpState extends State<SignUp> {
 
 class SignUpForm extends StatefulWidget {
   final Function refresh;
+  final bool error;
 
-  const SignUpForm({Key key, this.refresh}) : super(key: key);
+  const SignUpForm({Key key, this.refresh, this.error}) : super(key: key);
   _SignUpFormState createState() => _SignUpFormState();
 }
 
@@ -247,7 +250,16 @@ class _SignUpFormState extends State<SignUpForm> {
             child: Text('SIGN UP',
                 style:
                     Theme.of(context).textTheme.button.copyWith(fontSize: 14)),
-          )
+          ),
+          widget.error == false
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Text(
+                    'The email has already been taken',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                )
         ],
       ),
     );
