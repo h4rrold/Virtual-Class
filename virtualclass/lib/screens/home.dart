@@ -15,8 +15,6 @@ class ClassFeedPage extends StatefulWidget {
 
 class _ClassFeedPageState extends State<ClassFeedPage> {
   List<dynamic> classPostData = [];
-  List<Map<dynamic, dynamic>> _array = [];
-  var posts;
 
   Future<void> getPosts() async {
      widget.classId =
@@ -72,27 +70,16 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                               EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
                           itemCount: classPostData.length,
                           itemBuilder: (context, index) {
-                            print(index);
-                            final int i = index ~/ 2;
-                            print(i);
-                            if (i >= _array.length) {
-                              if (classPostData.length - 1 >= i)
-                                _array.add(classPostData[i]);
-                              if (classPostData.length - 1 >= i + 1)
-                                _array.add(classPostData[i + 1]);
-                              if (classPostData.length - 1 >= i + 2)
-                                _array.add(classPostData[i + 2]);
-                            }
-                            print('--' + _array.length.toString());
+                           
                             return Container(
                                 padding: EdgeInsets.only(bottom: 18.0),
                                 child: ClassPost(
-                                  _array[i]['id'],
-                                  _array[i]['title'],
-                                  _array[i]['user']['avatar'],
-                                  _array[i]['created_at'],
+                                  classPostData[index]['id'],
+                                   classPostData[index]['title'],
+                                   classPostData[index]['user']['avatar'],
+                                   classPostData[index]['created_at'],
                                   '',
-                                  _array[i]['content'],
+                                   classPostData[index]['content'],
                                   Random().nextInt(30),
                                 ));
                           })
