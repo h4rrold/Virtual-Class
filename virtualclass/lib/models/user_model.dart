@@ -11,7 +11,10 @@ class User extends ChangeNotifier{
     user = await HttpService.getrequest('user');
     return user;
   }
-
+  Future<dynamic> changeUserInfo(String userName,String userEmail,String userBio)async{
+   var response = await HttpService.putrequest('user',body: '{"name":"$userName","email":"$userEmail","bio":"$userBio"}');
+   return response;
+  }
   void clearuser(){
     this.user = null;
   }

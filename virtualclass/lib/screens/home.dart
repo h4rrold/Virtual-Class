@@ -17,7 +17,7 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
   List<dynamic> classPostData = [];
 
   Future<void> getPosts() async {
-     widget.classId =
+    widget.classId =
         Provider.of<ClassesModel>(context, listen: false).currentClassId;
     classPostData = await Provider.of<PostsModel>(context, listen: false)
         .getPosts(widget.classId);
@@ -51,9 +51,6 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
             );
 
           case ConnectionState.done:
-
-            ///task is complete with an error (eg. When you
-            ///are offline)
             if (snapshot.hasError)
               return Text(
                 'Error:\n\n${snapshot.error}',
@@ -65,21 +62,19 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                 body: RefreshIndicator(
                   child: (classPostData.isNotEmpty)
                       ? ListView.builder(
-                          //controller: _scrollController,
                           padding:
                               EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
                           itemCount: classPostData.length,
                           itemBuilder: (context, index) {
-                           
                             return Container(
                                 padding: EdgeInsets.only(bottom: 18.0),
                                 child: ClassPost(
                                   classPostData[index]['id'],
-                                   classPostData[index]['title'],
-                                   classPostData[index]['user']['avatar'],
-                                   classPostData[index]['created_at'],
+                                  classPostData[index]['title'],
+                                  classPostData[index]['user']['avatar'],
+                                  classPostData[index]['created_at'],
                                   '',
-                                   classPostData[index]['content'],
+                                  classPostData[index]['content'],
                                   Random().nextInt(30),
                                 ));
                           })
