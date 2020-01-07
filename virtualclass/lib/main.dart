@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/screens/signin.dart';
@@ -141,47 +145,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  
+  File _image;
+  
+  
 
-  void _incrementCounter() {
+
+Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+
     setState(() {
-      _counter++;
+      _image = image;
     });
   }
-
+  // Future<dynamic> getI()async{
+  //   return await _fimage.readAsString();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getappbar(context, widget.title),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios),
-              onPressed: () {
-                Provider.of<Navigation>(context).setText('UUUUURRRAA');
-                Provider.of<Navigation>(context).setCount(20);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return MainScreen();
-                }));
-              },
-            ),
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+        child: _image == null
+            ? Text('No image selected.')
+            :Image.file(_image)
+            //: Image.file(_image),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        onPressed: getImage,
+        tooltip: 'Pick Image',
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }
