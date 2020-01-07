@@ -58,7 +58,7 @@ class _MyClassesState extends State<MyClasses> {
 
                 ///task is complete with some data
                 return Scaffold(
-                    appBar: getappbar('My classes'),
+                    appBar: getappbar(context,'My classes'),
                     body: (_userClassesData.isNotEmpty) ? Padding(
                         padding: EdgeInsets.only(top: 8.0),
                         child: StaggeredGridView.countBuilder(
