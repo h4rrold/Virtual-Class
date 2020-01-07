@@ -14,7 +14,7 @@ class PostsModel extends ChangeNotifier{
   }
    Future<dynamic> addPost(int classId,String postTitle,String postText,String attachmentUrl)async{
      print('Post content:$postText');
-    var response = await HttpService.postrequest("classes/$classId/posts",body: '{"title": "$postTitle", "content": "$postText", "attachments:" "$attachmentUrl"}');
+    var response = await HttpService.postrequest("classes/$classId/posts",body: '{"title": "$postTitle", "content": "$postText", "attachments": "$attachmentUrl"}');
     print('---------ADD POST-------');
     print(response);
     return response;
