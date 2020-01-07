@@ -21,7 +21,7 @@ class AppDrawer extends StatelessWidget {
               }),
           _createDrawerItem(
               icon: Icons.notifications,
-              text: 'Notofications',
+              text: 'Notifications',
               onTap: () {
                 Navigator.pop(context);
                 Provider.of<Navigation>(context, listen: false).goNotifications();

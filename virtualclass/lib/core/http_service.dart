@@ -31,7 +31,6 @@ class HttpService {
       return json.decode(response.body);
     } else {
       print('Failed to load: ' + uri);
-      print(response.body);
       return response.statusCode;
       //throw Exception('Failed to load');
     }

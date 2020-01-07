@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
+import 'package:virtualclass/screens/classes.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
+import '../main_screen.dart';
 import '../models/navigation_model.dart';
 
 class MyStartPage extends StatefulWidget {
@@ -274,23 +276,33 @@ class _ClassCarouselState extends State<ClassCarousel> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        width: 105,
-                        height: 105,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.grey[600],
-                                offset: Offset(0, 1),
-                                blurRadius: 3),
-                          ],
-                          color: Theme.of(context).backgroundColor,
-                          image: DecorationImage(
-                              image: Image.network(i['image']).image,
-                              fit: BoxFit.contain,
-                              repeat: ImageRepeat.noRepeat),
-                          shape: BoxShape.circle,
+                      GestureDetector(
+                        onTap: () {
+                          Provider.of<ClassesModel>(context, listen: false)
+                              .currentClassId = i['id'];
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          width: 105,
+                          height: 105,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey[600],
+                                  offset: Offset(0, 1),
+                                  blurRadius: 3),
+                            ],
+                            color: Theme.of(context).backgroundColor,
+                            image: DecorationImage(
+                                image: Image.network(i['image']).image,
+                                fit: BoxFit.contain,
+                                repeat: ImageRepeat.noRepeat),
+                            shape: BoxShape.circle,
+                          ),
                         ),
                       ),
                       Container(
@@ -319,26 +331,39 @@ class _ClassCarouselState extends State<ClassCarousel> {
             });
           },
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: map(widget.carouselData, (index, url) {
-            return Container(
-              width: 8.0,
-              height: 8.0,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey[600],
-                        offset: Offset(0, 1),
-                        blurRadius: 3),
-                  ],
-                  shape: BoxShape.circle,
-                  color: _current == index
-                      ? Theme.of(context).hoverColor
-                      : Theme.of(context).backgroundColor),
-            );
-          }),
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: map(widget.carouselData, (index, url) {
+                return Container(
+                  width: 8.0,
+                  height: 8.0,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey[600],
+                            offset: Offset(0, 1),
+                            blurRadius: 3),
+                      ],
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Theme.of(context).hoverColor
+                          : Theme.of(context).backgroundColor),
+                );
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute( builder: (context) => MyClasses()));
+                },
+                  child: Text('View all your classes',
+                      style: Theme.of(context).textTheme.button)),
+            )
+          ],
         )
       ],
     );

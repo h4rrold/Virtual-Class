@@ -65,43 +65,53 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
             ///task is complete with some data
             return Scaffold(
                 body: RefreshIndicator(
-                                  child: ListView.builder(
-                      //controller: _scrollController,
-                      padding:
-                          EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
-                      itemCount: classPostData.length,
-                      itemBuilder: (context, index) {
-                        print(index);
-                        final int i = index ~/ 2;
-                        print(i);
-                        if (i >= _array.length) {
-                          if (classPostData.length - 1 >= i)
-                            _array.add(classPostData[i]);
-                          if (classPostData.length - 1 >= i + 1)
-                            _array.add(classPostData[i + 1]);
-                          if (classPostData.length - 1 >= i + 2)
-                            _array.add(classPostData[i + 2]);
-                        }
-                        print('--' + _array.length.toString());
-                        return Container(
-                            padding: EdgeInsets.only(bottom: 18.0),
-                            child: ClassPost(
-                              _array[i]['id'],
-                              _array[i]['title'],
-                              _array[i]['user']['avatar'],
-                              _array[i]['created_at'],
-                              '',
-                              _array[i]['content'],
-                              Random().nextInt(30),
-                            ));
-                      }), onRefresh: getPosts,
+                  child: (classPostData.isNotEmpty)
+                      ? ListView.builder(
+                          //controller: _scrollController,
+                          padding:
+                              EdgeInsets.only(top: 12.0, left: 8.0, right: 8.0),
+                          itemCount: classPostData.length,
+                          itemBuilder: (context, index) {
+                            print(index);
+                            final int i = index ~/ 2;
+                            print(i);
+                            if (i >= _array.length) {
+                              if (classPostData.length - 1 >= i)
+                                _array.add(classPostData[i]);
+                              if (classPostData.length - 1 >= i + 1)
+                                _array.add(classPostData[i + 1]);
+                              if (classPostData.length - 1 >= i + 2)
+                                _array.add(classPostData[i + 2]);
+                            }
+                            print('--' + _array.length.toString());
+                            return Container(
+                                padding: EdgeInsets.only(bottom: 18.0),
+                                child: ClassPost(
+                                  _array[i]['id'],
+                                  _array[i]['title'],
+                                  _array[i]['user']['avatar'],
+                                  _array[i]['created_at'],
+                                  '',
+                                  _array[i]['content'],
+                                  Random().nextInt(30),
+                                ));
+                          })
+                      : Center(
+                          child: Text(
+                          'Sorry, there are no posts in this class yet.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .body2
+                              .copyWith(fontSize: 16),
+                        )),
+                  onRefresh: getPosts,
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                     Navigator.push(context,
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return ClassAddPostPage(widget.classId);
-                        }));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return ClassAddPostPage(widget.classId);
+                    }));
                   },
                   child: Icon(Icons.add),
                   backgroundColor: Theme.of(context).hoverColor,
