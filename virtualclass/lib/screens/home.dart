@@ -9,7 +9,7 @@ import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
 class ClassFeedPage extends StatefulWidget {
   int classId;
-  ClassFeedPage(this.classId);
+
   _ClassFeedPageState createState() => _ClassFeedPageState();
 }
 
@@ -19,10 +19,10 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
   var posts;
 
   Future<void> getPosts() async {
-    var currentClassId =
+     widget.classId =
         Provider.of<ClassesModel>(context, listen: false).currentClassId;
     classPostData = await Provider.of<PostsModel>(context, listen: false)
-        .getPosts(currentClassId);
+        .getPosts(widget.classId);
   }
 
   @override

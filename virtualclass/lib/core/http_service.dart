@@ -9,7 +9,6 @@ class HttpService {
   static void settoken(String t){token = t;}
 
   static Future<dynamic> getrequest(String uri) async {
-     print('http_token ' + token.toString());
     print(domen+uri);
     http.Response response = await http.get(domen + uri, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
     print(response.statusCode);
@@ -29,7 +28,7 @@ class HttpService {
     http.Response response = await http.post(domen + uri, body: body, headers: {"Authorization" : "Bearer $token","Content-type": "application/json", "Accept": "application/json"});
           print(response.statusCode);
           print(json.decode(response.body));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body);
     } else {
       print('Failed to load: ' + uri);

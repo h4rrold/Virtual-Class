@@ -47,7 +47,7 @@ class Authorization extends ChangeNotifier {
 
     var response = await HttpService.postrequest('register',
         body: '{"name": "$name", "email": "$email", "password": "$password"}');
-    if (response == 200) {
+        if (response != 401) {
       HttpService.settoken(response['access_token']);
     }
     return response;

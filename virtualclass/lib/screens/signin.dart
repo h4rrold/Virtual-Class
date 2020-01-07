@@ -13,27 +13,26 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   bool loading;
-   bool error = false;
+  bool error = false;
 
-  void load(String email, String password) async{
+  void load(String email, String password) async {
     setState(() {
       loading = true;
-       });
-      var response = await Provider.of<Authorization>(context, listen: false)
-          .signin(email: email, password: password);
-      if (response == 401) {
-        setState(() {
-          error = true;
-          loading = false;
-        });
-      } else {
-        await Provider.of<Authorization>(context, listen: false)
-            .setusertoken(response['access_token']);
-              await Provider.of<User>(context, listen: false).getuser();
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyStartPage()));
-      }
-   
+    });
+    var response = await Provider.of<Authorization>(context, listen: false)
+        .signin(email: email, password: password);
+    if (response == 401) {
+      setState(() {
+        error = true;
+        loading = false;
+      });
+    } else {
+      await Provider.of<Authorization>(context, listen: false)
+          .setusertoken(response['access_token']);
+      await Provider.of<User>(context, listen: false).getuser();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MyStartPage()));
+    }
   }
 
   List<Widget> getContent() {
@@ -58,10 +57,7 @@ class _SignInState extends State<SignIn> {
                   color: Colors.grey[600], offset: Offset(0, 1), blurRadius: 3),
             ],
           ),
-          child: SignInForm(
-            refresh: load,
-            error: error
-          ),
+          child: SignInForm(refresh: load, error: error),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 16.0),

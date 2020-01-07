@@ -18,7 +18,7 @@ class TabNavigator extends StatelessWidget {
   final TabItem tabItem;
 
   final dynamic map = {
-    TabItem.home: ClassFeedPage(1),
+    TabItem.home: ClassFeedPage(),
     TabItem.settings: MyProfile(),
     //TabItem.notifications: Notifications(),
   };

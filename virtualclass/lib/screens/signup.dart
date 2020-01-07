@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/authorization.dart';
+import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/signin.dart';
 import 'package:virtualclass/screens/start_home.dart';
 
@@ -29,6 +30,7 @@ class _SignUpState extends State<SignUp> {
     } else {
       await Provider.of<Authorization>(context, listen: false)
           .setusertoken(response['access_token']);
+      await Provider.of<User>(context, listen: false).getuser();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => MyStartPage()));
     }
@@ -239,8 +241,8 @@ class _SignUpFormState extends State<SignUpForm> {
           OutlineButton(
             onPressed: () {
               if (this._formKey.currentState.validate()) {
-                widget.refresh(
-                    this.lastname + this.firstname, this.email, this.password);
+                widget.refresh(this.lastname + " " + this.firstname, this.email,
+                    this.password);
               }
             },
             shape:

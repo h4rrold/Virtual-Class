@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:virtualclass/core/http_service.dart';
 
 class ClassesModel extends ChangeNotifier {
-  List<dynamic> userClassesData;
+  var userClassesData;
   int currentClassId;
 
   Future<dynamic> getclasses() async {
@@ -11,8 +11,8 @@ class ClassesModel extends ChangeNotifier {
   }
 
   Future<dynamic> getSomeclasses() async {
-    userClassesData = await HttpService.getrequest('classes?amount=5');
-    return userClassesData;
+    var response = await HttpService.getrequest('classes?amount=5');
+      return response;
   }
 
   Future<dynamic> addclass(String name, String bio)async{
