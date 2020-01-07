@@ -119,7 +119,7 @@ class _AddPostFormState extends State<AddPostForm>{
                   var response =
                         await Provider.of<PostsModel>(context, listen: false)
                             .addPost(widget.classId,this.postTitle,this.postText,this.attachmentUrl);
-                    print(response);
+                   
                     if (response != 400)
                       Navigator.pop(context);
                     else

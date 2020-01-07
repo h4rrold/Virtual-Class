@@ -111,7 +111,15 @@ class _MyStartPageState extends State<MyStartPage> {
                                               .body1
                                               .copyWith(fontSize: 21)),
                                     ),
-                                    ClassCarousel(this._homeClassData)
+                                    (this._homeClassData.isNotEmpty)
+                                        ? ClassCarousel(this._homeClassData)
+                                        : Text(
+                                            'Sorry, you don’t have any classes yet.',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .body2
+                                                .copyWith(fontSize: 16),
+                                          )
                                   ],
                                 ),
                               )
@@ -236,11 +244,6 @@ class NotificationExcerpt extends StatelessWidget {
   }
 }
 
-final List<String> imgList = [
-  'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-  'https://seeklogo.com/images/F/flutter-logo-5086DD11C5-seeklogo.com.png',
-];
-
 class ClassCarousel extends StatefulWidget {
   List<dynamic> carouselData;
   ClassCarousel(this.carouselData);
@@ -299,7 +302,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
                                     .textTheme
                                     .body1
                                     .copyWith(fontSize: 18)),
-                            Text('Sergiy Tytenko',
+                            Text(i['owner']['name'],
                                 style: Theme.of(context).textTheme.body2)
                           ],
                         ),

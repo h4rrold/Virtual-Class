@@ -50,8 +50,6 @@ class _MyClassesState extends State<MyClasses> {
 
               case ConnectionState.done:
 
-                ///task is complete with an error (eg. When you
-                ///are offline)
                 if (snapshot.hasError)
                   return Text(
                     'Error:\n\n${snapshot.error}',
@@ -61,7 +59,7 @@ class _MyClassesState extends State<MyClasses> {
                 ///task is complete with some data
                 return Scaffold(
                     appBar: getappbar('My classes'),
-                    body: Padding(
+                    body: (_userClassesData.isNotEmpty) ? Padding(
                         padding: EdgeInsets.only(top: 8.0),
                         child: StaggeredGridView.countBuilder(
                           crossAxisCount: 2,
@@ -76,7 +74,18 @@ class _MyClassesState extends State<MyClasses> {
                               StaggeredTile.count(index % 3 != 0 ? 1 : 2, 1),
                           mainAxisSpacing: 8.0,
                           crossAxisSpacing: 10.0,
-                        )),
+                        )
+                        ) : Center(
+                         
+                          child: Text(
+                                              'Sorry, you don’t have any classes yet.',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .body2
+                                                  .copyWith(fontSize: 16),
+                                                  textAlign: TextAlign.center,
+                                            ),
+                        ),
                     floatingActionButton: FloatingActionButton(
                       onPressed: () {
                         Navigator.push(context,
