@@ -8,7 +8,7 @@ import 'package:virtualclass/screens/classes.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import '../main_screen.dart';
 import '../models/navigation_model.dart';
-
+import 'package:virtualclass/screens/notifications.dart';
 class MyStartPage extends StatefulWidget {
   MyStartPage({Key key, this.title}) : super(key: key);
   final String title;
@@ -113,7 +113,11 @@ class _MyStartPageState extends State<MyStartPage> {
                                 padding: EdgeInsets.only(top: 4),
                                 child: Center(
                                   child: InkWell(
-                                    onTap: () => {},
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                                        return Notifications();
+                                      }));
+                                    },
                                     child: Text('View more notifications',
                                         style:
                                             Theme.of(context).textTheme.button),
@@ -217,6 +221,7 @@ class NotificationExcerpt extends StatelessWidget {
           Expanded(
             child: Container(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(bottom: 6),

@@ -128,6 +128,7 @@ class _ClassSettingState extends State<ClassSettings> {
                           ),
                          
                           child: ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
                               separatorBuilder: (context, index) => Divider(
