@@ -15,6 +15,15 @@ class ClassesModel extends ChangeNotifier {
     }
   }
 
+  Future<dynamic> getclass() async {
+    var response = await HttpService.getrequest('classes/$currentClassId');
+    if (response is int) {
+      return [];
+    } else {
+      return response;
+    }
+  }
+
   Future<dynamic> getSomeclasses() async {
     var response = await HttpService.getrequest('classes?amount=5');
     if (response is int) {

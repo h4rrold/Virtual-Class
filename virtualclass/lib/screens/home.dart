@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
 import 'package:virtualclass/models/posts_model.dart';
+import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/postAdd.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 
@@ -15,12 +16,14 @@ class ClassFeedPage extends StatefulWidget {
 
 class _ClassFeedPageState extends State<ClassFeedPage> {
   List<dynamic> classPostData = [];
+  var currentclass;
 
   Future<void> getPosts() async {
     widget.classId =
         Provider.of<ClassesModel>(context, listen: false).currentClassId;
     classPostData = await Provider.of<PostsModel>(context, listen: false)
         .getPosts(widget.classId);
+         currentclass = await Provider.of<ClassesModel>(context, listen: false).getclass();
   }
 
   @override
@@ -88,7 +91,7 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                         )),
                   onRefresh: getPosts,
                 ),
-                floatingActionButton: FloatingActionButton(
+                floatingActionButton: (currentclass['owner_id'] == Provider.of<User>(context, listen:false).user['id'])?FloatingActionButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext context) {
@@ -97,7 +100,8 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                   },
                   child: Icon(Icons.add),
                   backgroundColor: Theme.of(context).hoverColor,
-                ));
+                ):null
+                );
         }
       },
     );
