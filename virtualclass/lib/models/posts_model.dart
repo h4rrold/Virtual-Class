@@ -18,4 +18,12 @@ class PostsModel extends ChangeNotifier{
     
     return response;
    }
+   Future <dynamic> getPostViews(int id)async{
+     var views = await HttpService.getrequest("posts/$id/views");
+     return views;
+   }
+   Future <dynamic> increaseViewsAmount(int id)async{
+     var views = await HttpService.postrequest("posts/$id/views");
+     return views;
+   }
 }

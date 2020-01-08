@@ -91,7 +91,11 @@ class _AddPostFormState extends State<AddPostForm>{
                   ),
                 ),
                 validator: (val) {
+                  if(val.isEmpty){
+                    return 'Post content can\'t be empty';
+                  }else{
                    this.postText = val;
+                  }
                 },
                 keyboardType: TextInputType.multiline,
                 

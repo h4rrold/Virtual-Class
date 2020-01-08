@@ -75,7 +75,7 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
                                   classPostData[index]['created_at'],
                                   '',
                                   classPostData[index]['content'],
-                                  Random().nextInt(30),
+                                  classPostData[index]['views_amount'],
                                 ));
                           })
                       : Center(
@@ -201,7 +201,8 @@ class _ClassPostState extends State<ClassPost> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             InkWell(
-                onTap: () => {
+                onTap: () async {
+                  await Provider.of<PostsModel>(context, listen: false).increaseViewsAmount(widget.postId);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -212,7 +213,7 @@ class _ClassPostState extends State<ClassPost> {
                                   widget.createdDate,
                                   widget.postAttachment,
                                   widget.postText,
-                                  widget.postViewsAmount)))
+                                  widget.postViewsAmount)));
                     },
                 child: Text('VIEW MORE',
                     style: Theme.of(context)
