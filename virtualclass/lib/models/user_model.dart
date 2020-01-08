@@ -4,7 +4,6 @@ import 'package:virtualclass/core/http_service.dart';
 
 
 class User extends ChangeNotifier{
-
   var user;
 
   Future<dynamic> getuser() async {

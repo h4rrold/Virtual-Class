@@ -20,222 +20,223 @@ class TabNavigator extends StatelessWidget {
   final dynamic map = {
     TabItem.home: ClassFeedPage(),
     TabItem.settings: ClassSettings(
-          'Test class',
-          'http://apeps.kpi.ua/images/teachers/%D0%A2%D0%B8%D1%82%D0%B5%D0%BD%D0%BA%D0%BE%20%D0%A1%D0%B5%D1%80%D0%B3%D1%96%D0%B9%20%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%871.jpg',
-          'Ця група створена для навчання розробці гібридних мобільних додатків на flutter',
-          [
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "2",
-              "name": "Petr Petrov",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-            {
-              "id": "1",
-              "name": "Sergiy Tytenko",
-              "avatar":
-                  "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
-            },
-          ]),
+          // 'Test class',
+          // 'http://apeps.kpi.ua/images/teachers/%D0%A2%D0%B8%D1%82%D0%B5%D0%BD%D0%BA%D0%BE%20%D0%A1%D0%B5%D1%80%D0%B3%D1%96%D0%B9%20%D0%92%D0%BE%D0%BB%D0%BE%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B8%D1%871.jpg',
+          // 'Ця група створена для навчання розробці гібридних мобільних додатків на flutter',
+          // [
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "2",
+          //     "name": "Petr Petrov",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          //   {
+          //     "id": "1",
+          //     "name": "Sergiy Tytenko",
+          //     "avatar":
+          //         "https:\/\/image.freepik.com\/free-photo\/_8353-6394.jpg",
+          //   },
+          // ]),
     //TabItem.notifications: Notifications(),
+    )
   };
 
   Map<String, Widget> _routeBuilders() {
