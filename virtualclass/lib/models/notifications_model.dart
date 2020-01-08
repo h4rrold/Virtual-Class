@@ -5,7 +5,7 @@ class NotificationsModel extends ChangeNotifier {
   List<dynamic> userNotification = [];
 
   Future<dynamic> getNotifications() async {
-    var response = await HttpService.getrequest('classes/1/notifications');
+    var response = await HttpService.getrequest('notifications');
     if (response is int) {
       return userNotification;
     } else {
@@ -15,7 +15,7 @@ class NotificationsModel extends ChangeNotifier {
   }
 
   Future<dynamic> getSomecnotifications() async {
-    var response = await HttpService.getrequest('classes/1/notifications?amount=3');
+    var response = await HttpService.getrequest('notifications?amount=3');
     if (response is int) {
       return userNotification;
     } else {
