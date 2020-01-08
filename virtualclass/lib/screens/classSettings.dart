@@ -97,7 +97,7 @@ class _ClassSettingState extends State<ClassSettings> {
                         Padding(
                           padding: EdgeInsets.only(top: 8.0),
                           child: Text(
-                            this._classData['description'],
+                            this._classData['description'] ?? '',
                             style: Theme.of(context)
                                 .textTheme
                                 .body2
