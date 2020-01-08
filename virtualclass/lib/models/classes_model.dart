@@ -4,6 +4,7 @@ import 'package:virtualclass/core/http_service.dart';
 class ClassesModel extends ChangeNotifier {
   List<dynamic> userClassesData = [];
   int currentClassId;
+  var currentclass;
 
   Future<dynamic> getclasses() async {
     var response = await HttpService.getrequest('classes');
@@ -20,7 +21,8 @@ class ClassesModel extends ChangeNotifier {
     if (response is int) {
       return [];
     } else {
-      return response;
+      currentclass = response;
+      return currentclass;
     }
   }
 

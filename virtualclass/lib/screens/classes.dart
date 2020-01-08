@@ -116,8 +116,9 @@ class UserClassItem extends StatelessWidget {
   // Depending on index this widget will build differently
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async{
         Provider.of<ClassesModel>(context, listen: false).currentClassId = this._classId;
+        await Provider.of<ClassesModel>(context, listen: false).getclass();
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MainScreen()));
       },

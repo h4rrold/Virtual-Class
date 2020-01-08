@@ -23,7 +23,7 @@ class _ClassFeedPageState extends State<ClassFeedPage> {
         Provider.of<ClassesModel>(context, listen: false).currentClassId;
     classPostData = await Provider.of<PostsModel>(context, listen: false)
         .getPosts(widget.classId);
-         currentclass = await Provider.of<ClassesModel>(context, listen: false).getclass();
+         currentclass =  Provider.of<ClassesModel>(context, listen: false).currentclass;
   }
 
   @override

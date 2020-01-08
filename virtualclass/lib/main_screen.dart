@@ -3,6 +3,7 @@ import 'package:virtualclass/screens/classChat.dart';
 import 'package:virtualclass/widgets/bottom_navigation_bar.dart';
 import 'package:virtualclass/core/tab_navigator.dart';
 import 'package:flutter/material.dart';
+import 'models/classes_model.dart';
 import 'models/navigation_model.dart';
 import 'widgets/mydrawerappbar.dart';
 
@@ -88,7 +89,7 @@ class MainScreenState extends State<MainScreen> {
       child: Scaffold(
         drawerEdgeDragWidth: 0,
         drawer: AppDrawer(context),
-      appBar: getappbar(context,'Virtual Class'),
+      appBar: getappbar(context,Provider.of<ClassesModel>(context,listen: false).currentclass['name']),
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.home),
           _buildOffstageNavigator(TabItem.settings),

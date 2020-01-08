@@ -280,9 +280,10 @@ class _ClassCarouselState extends State<ClassCarousel> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async{
                           Provider.of<ClassesModel>(context, listen: false)
                               .currentClassId = i['id'];
+                              await Provider.of<ClassesModel>(context, listen: false).getclass();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
