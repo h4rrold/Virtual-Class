@@ -18,9 +18,12 @@ class HttpService {
       "Accept": "application/json"
     });
     print(response.statusCode);
-    print(json.decode(response.body));
+    print(response.body);
+    //print(json.decode(response.body));
     if (response.statusCode == 200) {
+      if(response.body != '')
       return json.decode(response.body);
+      else return [];
     } else {
       print('Failed to load: ' + uri);
       return response.statusCode;

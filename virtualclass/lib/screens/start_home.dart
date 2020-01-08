@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:virtualclass/models/classes_model.dart';
+import 'package:virtualclass/models/notifications_model.dart';
 import 'package:virtualclass/screens/classes.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
 import '../main_screen.dart';
@@ -17,10 +18,14 @@ class MyStartPage extends StatefulWidget {
 }
 
 class _MyStartPageState extends State<MyStartPage> {
-  List<dynamic> _homeClassData;
-  Future<void> getclasses() async {
+  List<dynamic> _homeClassData = [];
+  List<dynamic> _notifications = [];
+  Future<void> getclassesNotifications() async {
     _homeClassData = await Provider.of<ClassesModel>(context, listen: false)
         .getSomeclasses();
+    _notifications =
+        await Provider.of<NotificationsModel>(context, listen: false)
+            .getSomecnotifications();
   }
 
   @override
@@ -29,7 +34,7 @@ class _MyStartPageState extends State<MyStartPage> {
     // TODO: implement build
     return RefreshIndicator(
       child: FutureBuilder(
-          future: getclasses(),
+          future: getclassesNotifications(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
 
@@ -65,7 +70,7 @@ class _MyStartPageState extends State<MyStartPage> {
 
                 ///task is complete with some data
                 return Scaffold(
-                  appBar: getappbar(context,'Home'),
+                  appBar: getappbar(context, 'Home'),
                   drawer: AppDrawer(context),
                   body: Container(
                     padding: EdgeInsets.only(
@@ -89,7 +94,21 @@ class _MyStartPageState extends State<MyStartPage> {
                                   ),
                                 ),
                               ),
-                              NotificationList(),
+                              (!_notifications.isEmpty)
+                                  ? NotificationList(
+                                      notificationData: _notifications,
+                                    )
+                                  : Padding(
+                                    padding: const EdgeInsets.only(bottom:10.0),
+                                    child: Center(
+                                        child: Text(
+                                        'Sorry, there are no notifications yet.',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .body2
+                                            .copyWith(fontSize: 16),
+                                      )),
+                                  ),
                               Padding(
                                 padding: EdgeInsets.only(top: 4),
                                 child: Center(
@@ -134,13 +153,15 @@ class _MyStartPageState extends State<MyStartPage> {
                 );
             }
           }),
-      onRefresh: getclasses,
+      onRefresh: getclassesNotifications,
     );
   }
 }
 
 class NotificationList extends StatefulWidget {
-  var notificationData;
+  final List<dynamic> notificationData;
+
+  const NotificationList({Key key, this.notificationData}) : super(key: key);
 
   @override
   _NotificationListState createState() => _NotificationListState();
@@ -153,33 +174,15 @@ class _NotificationListState extends State<NotificationList> {
     return Container(
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(bottom: 12),
+          ...widget.notificationData.map((notificaton) => Padding(
+            padding: const EdgeInsets.only(bottom:8.0),
             child: NotificationExcerpt(
-                'https://image.freepik.com/free-photo/_8353-6394.jpg',
-                'Pablo Molini',
-                'replied to you',
-                'Hi. Today I will sent you the circuit. Be ready to start to work!',
-                'today at 21:40'),
-          ),
-          Container(
-            padding: EdgeInsets.only(bottom: 12),
-            child: NotificationExcerpt(
-                'https://image.freepik.com/free-photo/_8353-6394.jpg',
-                'Pablo Molini',
-                'replied to you',
-                'Hi. Today I will sent you the circuit. Be ready to start to work!',
-                'today at 21:40'),
-          ),
-          Container(
-            padding: EdgeInsets.only(bottom: 12),
-            child: NotificationExcerpt(
-                'https://image.freepik.com/free-photo/_8353-6394.jpg',
-                'Pablo Molini',
-                'replied to you',
-                'Hi. Today I will sent you the circuit. Be ready to start to work!',
-                'today at 21:40'),
-          ),
+                notificaton['class']['image'],
+                notificaton['class']['name'],
+                'new post',
+                notificaton['content'],
+                notificaton['created_at']),
+          ))
         ],
       ),
     );
@@ -357,9 +360,10 @@ class _ClassCarouselState extends State<ClassCarousel> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute( builder: (context) => MyClasses()));
-                },
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyClasses()));
+                  },
                   child: Text('View all your classes',
                       style: Theme.of(context).textTheme.button)),
             )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:virtualclass/main.dart';
 import 'package:virtualclass/screens/app_settings.dart';
 import 'package:virtualclass/screens/classes.dart';
+import 'package:virtualclass/screens/notifications.dart';
 
 class Navigation extends ChangeNotifier {
   BuildContext mainacontext;
@@ -36,7 +37,7 @@ setCount(int t) {
   }
 
   goNotifications() {
-    Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => MyHomePage(title: 'Notifications',)));
+    Navigator.push(this.mainacontext, MaterialPageRoute(builder:(context) => Notifications()));
   }
 
   goClasses() {

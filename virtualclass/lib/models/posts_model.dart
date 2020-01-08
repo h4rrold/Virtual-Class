@@ -8,8 +8,13 @@ class PostsModel extends ChangeNotifier{
 
   Future<List<dynamic>> getPosts(int classId) async {
     print('--------------------------------postData---------------------------------');
-      classPostData = await HttpService.getrequest("classes/$classId/posts");
+      var response = await HttpService.getrequest("classes/$classId/posts");
+      if (response is int) {
       return classPostData;
+    } else {
+      classPostData = response;
+      return classPostData;
+    }
   }
    Future<dynamic> addPost(int classId,String postTitle,String postText,String attachmentUrl)async{
      print('Post content:$postText');

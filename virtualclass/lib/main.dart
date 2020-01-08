@@ -12,6 +12,7 @@ import 'main_screen.dart';
 import 'models/authorization.dart';
 import 'models/model_app_settings.dart';
 import 'models/navigation_model.dart';
+import 'models/notifications_model.dart';
 import 'models/posts_model.dart';
 import 'models/user_model.dart';
 import 'screens/start_home.dart';
@@ -25,6 +26,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => ClassesModel()),
       ChangeNotifierProvider(create: (context) => PostsModel()),
       ChangeNotifierProvider(create: (context) => User()),
+      ChangeNotifierProvider(create: (context) => NotificationsModel()),
     ],
     child: MyApp(),
   ));
