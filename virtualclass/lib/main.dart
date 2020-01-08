@@ -167,7 +167,7 @@ Future getImage() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getappbar(context, widget.title),
+      appBar: getappbar(context, widget.title, true),
       body: Center(
         child: _image == null
             ? Text('No image selected.')

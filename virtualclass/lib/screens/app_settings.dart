@@ -14,7 +14,7 @@ class _AppSettingsState extends State<AppSettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getappbar(context,'Settings'),
+      appBar: getappbar(context,'Settings', true),
       body: SwitchListTile(
         title: const Text('Dark mode'),
         value: Provider.of<AppSettingsModel>(context, listen: false).getBoolVal(),

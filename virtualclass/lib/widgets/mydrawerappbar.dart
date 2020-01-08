@@ -6,9 +6,9 @@ import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/myProfile.dart';
 
 class AppDrawer extends StatelessWidget {
-final BuildContext context;
+  final BuildContext context;
 
-  const AppDrawer( this.context,{Key key}) : super(key: key);
+  const AppDrawer(this.context, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ final BuildContext context;
               onTap: () {
                 Navigator.pop(context);
                 Provider.of<Navigation>(context, listen: false).goClasses();
-                
               }),
           _createDrawerItem(
               icon: Icons.notifications,
               text: 'Notifications',
               onTap: () {
                 Navigator.pop(context);
-                Provider.of<Navigation>(context, listen: false).goNotifications();
+                Provider.of<Navigation>(context, listen: false)
+                    .goNotifications();
               }),
           _createDrawerItem(
               icon: Icons.settings,
@@ -56,7 +56,8 @@ final BuildContext context;
                           FlatButton(
                             child: new Text("Yes"),
                             onPressed: () {
-                              Provider.of<User>(context, listen: false).clearuser();
+                              Provider.of<User>(context, listen: false)
+                                  .clearuser();
                               Provider.of<Authorization>(context).deletetoken();
                             },
                           ),
@@ -85,12 +86,13 @@ final BuildContext context;
         padding: EdgeInsets.zero,
         decoration: BoxDecoration(
           color: Colors.blue.shade800,
-            ),
+        ),
         child: Stack(children: <Widget>[
           Positioned(
               bottom: 12.0,
               left: 16.0,
-              child: Text(Provider.of<User>(context, listen: false).user['name'],
+              child: Text(
+                  Provider.of<User>(context, listen: false).user['name'],
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -115,31 +117,34 @@ final BuildContext context;
   }
 }
 
-Widget getappbar(context,String title){
-   return AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Text(
-              title,
-            ),
-          ],
+Widget getappbar(context, String title, bool profile) {
+  return AppBar(
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Text(
+          title,
         ),
-        actions: <Widget>[
-          Padding(
+      ],
+    ),
+    actions: <Widget>[
+      (profile == true)
+          ? Padding(
               padding: EdgeInsets.only(right: 16, left: 28),
               child: Center(
                   child: GestureDetector(
-                      onTap: () => {
-                       Navigator.push(context,
-                        MaterialPageRoute(builder: (BuildContext context) {
-                      return MyProfile();
-                    }))
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return MyProfile();
+                        }));
                       },
                       child: UserAvatar(
-                          Provider.of<User>(context, listen: false).user['avatar']))))
-        ],
-      );
+                          Provider.of<User>(context, listen: false)
+                              .user['avatar']))))
+          : Container()
+    ],
+  );
 }
 
 class UserAvatar extends StatelessWidget {

@@ -59,7 +59,7 @@ class NotificationsState extends State<Notifications> {
 
             ///task is complete with some data
             return Scaffold(
-              appBar: getappbar(context, 'Notifications'),
+              appBar: getappbar(context, 'Notifications', true),
                 body: RefreshIndicator(
                   child: (_userNotifications.isNotEmpty)
                       ? ListView.builder(

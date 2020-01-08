@@ -52,7 +52,7 @@ class _MyProfileState extends State<MyProfile> {
                   textAlign: TextAlign.center,
                 );
               return Scaffold(
-                appBar: getappbar(context, 'My profile'),
+                appBar: getappbar(context, 'My profile', false),
                 body: SingleChildScrollView(
                   padding:
                       const EdgeInsets.only(top: 32.0, left: 16.0, right: 16.0),

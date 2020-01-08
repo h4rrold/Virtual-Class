@@ -70,7 +70,7 @@ class _MyStartPageState extends State<MyStartPage> {
 
                 ///task is complete with some data
                 return Scaffold(
-                  appBar: getappbar(context, 'Home'),
+                  appBar: getappbar(context, 'Home', true),
                   drawer: AppDrawer(context),
                   body: Container(
                     padding: EdgeInsets.only(
@@ -284,7 +284,7 @@ class _ClassCarouselState extends State<ClassCarousel> {
                           Provider.of<ClassesModel>(context, listen: false)
                               .currentClassId = i['id'];
                               await Provider.of<ClassesModel>(context, listen: false).getclass();
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => MainScreen()));
