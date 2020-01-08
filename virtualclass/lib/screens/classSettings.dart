@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:virtualclass/main_screen.dart';
 import 'package:virtualclass/models/classes_model.dart';
+import 'package:virtualclass/models/navigation_model.dart';
 import 'package:virtualclass/models/user_model.dart';
 import 'package:virtualclass/screens/postAdd.dart';
 import 'package:virtualclass/widgets/mydrawerappbar.dart';
@@ -23,7 +25,11 @@ class _ClassSettingState extends State<ClassSettings> {
     _classMembers = await Provider.of<ClassesModel>(context, listen: false)
         .getClassMembers(this._classId);
   }
-
+  void refresh(){
+    setState(() {
+      _getData();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -85,12 +91,20 @@ class _ClassSettingState extends State<ClassSettings> {
                             shape: BoxShape.circle,
                           ),
                         ),
-                        Padding(
+                        (Provider.of<User>(context,listen: false).user['id'] == this._classData['owner_id']) ? Padding(
                           padding: const EdgeInsets.only(top: 16.0),
+                          child: ClassDataForm( this._classId,this._classData['name'],this._classData['description'],this.refresh)
+                        ) : Container(
+                          child: Column(
+                            children: <Widget>[
+                          Padding(
+                          padding: EdgeInsets.only(top: 8.0),
                           child: Text(
-                            this._classData['name'],
-                            style: Theme.of(context).textTheme.body1.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                            this._classData['name'] ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .body2
+                                .copyWith(fontSize: 15),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -105,6 +119,11 @@ class _ClassSettingState extends State<ClassSettings> {
                             textAlign: TextAlign.center,
                           ),
                         ),
+                            ],
+                          ),
+                        ),
+                       
+                        
                         (Provider.of<User>(context,listen: false).user['id'] == this._classData['owner_id']) ? Padding(
                           padding: const EdgeInsets.only(top: 16.0),
                           child: InkWell(
@@ -168,50 +187,6 @@ class _ClassSettingState extends State<ClassSettings> {
         }
       },
     );
-
-    // Widget membersList() {
-    //   const int _lazyAmount = 6;
-    //   List<Map<dynamic, dynamic>> _lazyArray = [];
-    //   return Expanded(
-    //     child: Container(
-    //       decoration: BoxDecoration(
-    //         color: Theme.of(context).backgroundColor,
-    //          boxShadow: [
-    //         BoxShadow(
-    //             color: Colors.grey[400], offset: Offset(0, 1), blurRadius: 3),
-    //       ],
-    //       ),
-    //       margin: EdgeInsets.only(top:16.0),
-
-    //       child: ListView.separated(
-    //         padding: EdgeInsets.symmetric(horizontal: 16.0),
-    //           separatorBuilder: (context, index) => Divider(height: 0,
-    //   ),
-    //           itemCount: classMembers.length,
-    //           itemBuilder: (context, index) {
-    //             if (index >= _lazyArray.length) {
-    //               for (int j = 0; j < _lazyAmount; j++) {
-    //                 if (classMembers.length - 1 >= index + j) {
-    //                   _lazyArray.add(classMembers[index + j]);
-    //                 }
-    //               }
-    //             }
-    //             return Container(
-    //               //color: Theme.of(context).backgroundColor,
-    //               padding: EdgeInsets.symmetric(vertical: 12.0),
-    //               //color: Theme.of(context).backgroundColor,
-    //               child: Row(children: [
-    //                 Padding(
-    //                   padding: const EdgeInsets.only(right: 16.0),
-    //                   child: UserAvatar(_lazyArray[index]['avatar']),
-    //                 ),
-    //                 Text(_lazyArray[index]['name'],style: Theme.of(context).textTheme.body2.copyWith(fontSize:17,fontWeight: FontWeight.normal),),
-    //               ]),
-    //             );
-    //           }),
-    //     ),
-    //   );
-    // }
   }
 }
 
@@ -330,5 +305,101 @@ class _AddMemberFormState extends State<AddMemberForm> {
         ],
       ),
     );
+  }
+}
+
+class ClassDataForm extends StatefulWidget {
+  ClassDataForm(this.classId,this.name,this.userBio,this.refreshFunc);
+  String name;
+  String userBio;
+  int classId;
+  Function refreshFunc;
+  _ClassDataFormState createState() => _ClassDataFormState();
+}
+
+class _ClassDataFormState extends State<ClassDataForm> {
+  bool loading = false;
+  final _formKey = GlobalKey<FormState>();
+  RegExp allowedSybm = RegExp(r'^[a-zA-Z0-9]+$');
+  @override
+  Widget build(BuildContext context) {
+    if (!loading) {
+      return Form(
+        key: this._formKey,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: TextFormField(
+                initialValue: widget.name,
+                decoration: InputDecoration(
+                  labelText: "Name",
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return "Name cannot be empty";
+                  } else {
+                    widget.name = val;
+                  }
+                },
+                keyboardType: TextInputType.text,
+              ),
+            ),
+        
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: TextFormField(
+                maxLines: null,
+                initialValue: widget.userBio,
+                decoration: InputDecoration(
+                  labelText: "Class bio",
+                  fillColor: Theme.of(context).backgroundColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                validator: (val) {
+                  widget.userBio = val;
+                },
+                keyboardType: TextInputType.multiline,
+              ),
+            ),
+            OutlineButton(
+              onPressed: () async {
+                if (this._formKey.currentState.validate()) {
+                  await Provider.of<ClassesModel>(context, listen: true).updateClassData(widget.classId,
+                      widget.name, widget.userBio);
+                      await Provider.of<ClassesModel>(context, listen: false).getclass();
+                  Navigator.pushReplacement(Provider.of<Navigation>(context,listen: false).mainacontext, MaterialPageRoute(builder: (context)=>MainScreen()));
+
+                 
+                }
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
+              borderSide: BorderSide(color: Theme.of(context).hoverColor),
+              padding:
+                  EdgeInsets.only(top: 16, bottom: 16, left: 32, right: 32),
+              child: Text('SAVE CHANGES',
+                  style: Theme.of(context)
+                      .textTheme
+                      .button
+                      .copyWith(fontSize: 14)),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Center(
+        child: SpinKitFadingCube(
+          size: 100,
+          color: Colors.blue,
+        ),
+      );
+    }
   }
 }

@@ -58,4 +58,9 @@ class ClassesModel extends ChangeNotifier {
     var response = await HttpService.postrequest('classes/$classId/members',body: '{"email":"$userEmail"}');
     return response;
   }
+  
+  Future<dynamic> updateClassData(int classId,String className,String classBio)async{
+    var response = await HttpService.putrequest('classes/$classId',body:'{"name" : "$className","description":"$classBio"}');
+    return response;
+  }
 }

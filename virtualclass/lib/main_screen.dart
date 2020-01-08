@@ -89,7 +89,7 @@ class MainScreenState extends State<MainScreen> {
       child: Scaffold(
         drawerEdgeDragWidth: 0,
         drawer: AppDrawer(context),
-      appBar: getappbar(context,Provider.of<ClassesModel>(context,listen: false).currentclass['name'], true),
+      appBar: getappbar(context,Provider.of<ClassesModel>(context).currentclass['name'], true),
         body: Stack(children: <Widget>[
           _buildOffstageNavigator(TabItem.home),
           _buildOffstageNavigator(TabItem.settings),
